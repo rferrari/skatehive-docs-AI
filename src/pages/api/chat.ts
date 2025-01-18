@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import type { APIRoute } from 'astro';
 import OpenAI from 'openai';
-
+export const prerender = false;
+export const output = 'server';
 // Initialize clients
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseKey = import.meta.env.SUPABASE_ANON_KEY;
