@@ -20,7 +20,7 @@ console.log('Navigation docs:', docs.map(d => ({
   <div class="mb-4">
     <div id="search" class="pagefind-ui"></div>
   </div>
-  
+
   <ul class="space-y-2">
     {sortedDocs.map((doc) => {
       // Get everything after the version in the slug
@@ -30,9 +30,7 @@ console.log('Navigation docs:', docs.map(d => ({
         <li>
           <a 
             href={`/docs/${version}/${slug}`}
-            class:list={[
-              "block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md",
-            ]}
+            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
           >
             {doc.data.title}
           </a>
