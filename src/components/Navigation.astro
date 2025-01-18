@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  version?: string;
+}
+
+const { version = 'latest' } = Astro.props;
+const docs = await getCollection('docs', ({ data }) => data.version === version);
+const sortedDocs = docs.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+console.log('Navigation docs:', docs.map(d => ({
+  slug: d.slug,
+  title: d.data.title,
+  version: d.data.version
+})));
+---
+
+<nav class="w-64 bg-white border-r border-gray-200 p-4 hidden md:block">
+  <div class="mb-4">
+    <div id="search" class="pagefind-ui"></div>
+  </div>
+  
+  <ul class="space-y-2">
+    {sortedDocs.map((doc) => {
+      // Get everything after the version in the slug
+      const [version, ...slugParts] = doc.slug.split('/');
+      const slug = slugParts.join('/');
+      return (
+        <li>
+          <a 
+            href={`/docs/${version}/${slug}`}
+            class:list={[
+              "block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md",
+            ]}
+          >
+            {doc.data.title}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>
+
+<script>
+  if (import.meta.env.PROD) {
+    window.addEventListener('load', () => {
+      new PagefindUI({ element: '#search' });
+    });
+  }
+</script>

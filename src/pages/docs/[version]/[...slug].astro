@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  
+  return docs.map(doc => {
+    // Extract version and slug parts
+    const [version, ...slugParts] = doc.slug.split('/');
+    const slug = slugParts.join('/');
+    
+    console.log('Creating path for doc:', {
+      fullSlug: doc.slug,
+      version,
+      slug,
+      title: doc.data.title
+    });
+    
+    return {
+      params: { version, slug },
+      props: { doc }
+    };
+  });
+}
+
+// Get the current document
+const { doc } = Astro.props;
+const { Content } = await doc.render();
+---
+
+<DocsLayout title={doc.data.title} version={doc.data.version}>
+  <article class="prose prose-slate max-w-none">
+    <Content />
+  </article>
+</DocsLayout>
