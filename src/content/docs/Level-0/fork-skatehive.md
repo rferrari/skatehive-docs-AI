@@ -1,7 +1,9 @@
 ---
+id: "fork"
 title: Fork Skatehive Guide
 description: fork skatehive
 sidebar_position: 1
+version: "latest"
 ---
 
 # How to Fork Skatehive 🛹

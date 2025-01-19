@@ -11,8 +11,20 @@ export default defineConfig({
  
   output: 'static',
   adapter: vercel(),
+
   content: {
-    collections: ['docs'],
+    collections: {
+      docs: {
+        schema: {
+          id: String,
+          title: String,
+          description: String,
+          version: String,
+          position: Number,
+          order: Number,
+          keywords: Array,
+        },
+      },
+    },
   },
- 
 });

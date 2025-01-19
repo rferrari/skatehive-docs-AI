@@ -2,6 +2,8 @@
 title: Skatehive OG NFTs Airdrop is live - A Governance Experiment
 sidebar_position: 6
 description: nft
+version: "latest"
+id: "nftlog"
 ---
 
 If you've known <a href="https://discord.gg/skatehive" class="button-link" target="_blank">**Skatehive Discord**</a> for some time, you know that we love involving our community in decision-making. Now, it's time to take the next step by launching our own Governance Token, the <a href="https://zora.co/collect/eth:0x3ded025e441730e26ab28803353e4471669a3065/1" class="button-link" target="_blank">**Skatehive OG NFT collection**</a>.

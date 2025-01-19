@@ -26,9 +26,10 @@ const sortedDocs = docs.sort((a, b) =>
       {sortedDocs.map(doc => (
         <div class="border-b pb-4">
           <h2 class="mb-2">
-            <a href={`/docs/${doc.slug}`} class="text-blue-600 hover:text-blue-800 no-underline">
-              {doc.data.title}
-            </a>
+           <a href={`/docs/${doc.data.version}/${doc.id}`} class="text-blue-600 hover:text-blue-800 no-underline">
+  {doc.data.title}
+</a>
+
           </h2>
           <p class="text-gray-600">{doc.data.description}</p>
         </div>

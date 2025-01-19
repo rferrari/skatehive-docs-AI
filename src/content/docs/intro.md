@@ -1,8 +1,16 @@
 ---
 position: 1
-title: Skatehive Intro
+id: "Skatehive"
+title: Skatehive
 description: Skatehive is a decentralized platform uniting skaters, content creators, and fans. It empowers users to share, create, and earn rewards while building a community-driven space for skateboarding culture. With an open-source model and a focus on creativity, Skatehive challenges traditional media and offers a new way for skaters to showcase their talent.
-
+keywords:
+  - "skateboarding"
+  - "decentralized platforms"
+  - "Skatehive"
+  - "skateboarding community"
+  - "skater-owned media"
+version: "latest"
+order: 1
 ---
 
 ### Overview

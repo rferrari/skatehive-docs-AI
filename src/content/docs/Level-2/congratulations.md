@@ -2,7 +2,8 @@
 sidebar_position: 4
 title: Congratulations on Completing the Skatehive Tutorials!  
 description: Celebrate completing the tutorials and get ready to post your tricks, earn rewards, and stay active within the Skatehive community. Start creating and engage with the platform to increase your visibility and rewards!
-
+version: "latest"
+id: "congratulations"
 ---
 
 # Congratulations! 🎉

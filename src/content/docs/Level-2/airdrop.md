@@ -2,7 +2,8 @@
 title: Be eligible for the airdrop
 sidebar_position: 2
 description: Learn how to get eligible for Skatehive’s airdrop by connecting your Hive and Ethereum wallets, engaging with the platform, and creating your own airdrop. Step-by-step instructions and tips are provided.
-
+id: "airdrop"
+version: "latest"
 ---
 
 ### How to get lucky

@@ -1,8 +1,9 @@
 ---
 title: Discord Tutorial  
 description: A comprehensive guide on using Discord for community building and coordination. Learn about rooms, roles, bots, and more to connect with others and make the most of Discord's features.
-
+id: "discord"
 sidebar_position: 5  
+version: "latest"
 ---
 
 # Discord Tutorial: Connect, Share, and Create
