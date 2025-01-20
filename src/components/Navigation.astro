@@ -16,21 +16,27 @@ console.log('Navigation docs:', docs.map(d => ({
 })));
 ---
 
-<nav class="w-64 bg-white border-r border-gray-200 p-4 hidden md:block">
-  <div class="mb-4">
+<nav id="sidebarMenu" class="fixed top-0 left-0 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:shadow-none md:w-64 z-20 overflow-y-auto">
+  <div class="p-4 flex items-center justify-between md:hidden">
+    <h2 class="text-lg font-semibold">Menu</h2>
+    <button id="closeMenu" class="text-gray-700 hover:text-gray-900">
+      ✕
+    </button>
+  </div>
+
+  <div class="p-4 hidden md:block">
     <div id="search" class="pagefind-ui"></div>
   </div>
 
-  <ul class="space-y-2">
+  <ul class="space-y-2 p-4">
     {sortedDocs.map((doc) => {
-      // Get everything after the version in the slug
       const [version, ...slugParts] = doc.slug.split('/');
       const slug = slugParts.join('/');
       return (
-        <li>
+        <li key={doc.slug}>
           <a 
             href={`/docs/${version}/${slug}`}
-            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+            class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white rounded-md transition duration-200"
           >
             {doc.data.title}
           </a>
@@ -39,11 +45,121 @@ console.log('Navigation docs:', docs.map(d => ({
     })}
   </ul>
 </nav>
+<button 
+  id="homeButton" 
+  class="fixed top-4 right-4 bg-blue-500 text-white p-3 rounded-md z-10 shadow-md transition duration-300 hover:bg-blue-700"
+>
+   Home
+</button>
+
+<!-- Botão para abrir o menu -->
+<button id="openMenu" class="fixed top-4 left-4 bg-blue-500 text-white p-3 rounded-md md:hidden z-10">
+  ☰
+</button>
 
 <script>
-  if (import.meta.env.PROD) {
-    window.addEventListener('load', () => {
-      new PagefindUI({ element: '#search' });
-    });
-  }
+  const openMenuButton = document.getElementById('openMenu');
+  const closeMenuButton = document.getElementById('closeMenu');
+  const menu = document.getElementById('sidebarMenu');
+  const body = document.body;
+
+  openMenuButton?.addEventListener('click', () => {
+    menu?.classList.remove('-translate-x-full');
+    body.classList.add('no-scroll'); // Prevent scrolling in the background
+  });
+
+  closeMenuButton?.addEventListener('click', () => {
+    menu?.classList.add('-translate-x-full');
+    body.classList.remove('no-scroll'); // Restore scrolling in the background
+  });
+
+   // Home button
+  const homeButton = document.getElementById('homeButton');
+  homeButton?.addEventListener('click', () => {
+    window.location.href = '/'; // Redirect to the homepage
+  });
 </script>
+
+<style is:global>
+  /* Global styles for the button to go back to the homepage */
+  #homeButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;  /* Position on the right side */
+    z-index: 10;
+    background-color: #32CD32;
+    color: #222016;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+
+  #homeButton:hover {
+    background-color: #0056b3;
+  }
+
+  /* Styles for the mobile menu open button */
+  #openMenu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background-color: #32CD32;
+     color: #222016;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+
+  #openMenu:hover {
+    background-color: #0056b3;
+  }
+
+  /* Styles for the responsive menu */
+  nav {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li a {
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  li a:hover {
+    transform: translateX(5px);
+  }
+
+  /* Styles for the responsive menu */
+  @media (max-width: 768px) {
+    nav {
+      width: 250px;
+      z-index: 20;
+    }
+
+    #openMenu {
+      z-index: 10; /* Make sure it is not above the menu */
+    }
+  }
+
+  /* Responsiveness: on desktop, the menu open button is hidden */
+  @media (min-width: 768px) {
+    #openMenu {
+      display: none; /* Hide the menu open button on desktop */
+    }
+
+    #sidebarMenu {
+      transform: none; /* The menu will be visible on desktop */
+    }
+  }
+</style>
