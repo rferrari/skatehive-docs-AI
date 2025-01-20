@@ -9,7 +9,8 @@ keywords:
   - HBD staking
   - curation
   - delegation
-version: "1.0"
+version: "latest"
+sidebar_position: 5
 ---
 
 # How to Generate Passive Income on SkateHive
