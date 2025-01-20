@@ -3,17 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import { Chat } from '../components/Chat';
 ---
 
-<Layout title="Documentation + AI Chat">
+<Layout>
   <main class="max-w-4xl mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-8 text-center">Documentation + AI Assistant</h1>
     
     <div class="mb-8 text-center">
-      <a 
-        href="/docs/latest"
-        class="inline-block px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-      >
-        Browse Documentation
-      </a>
+     <a 
+  href="/docs/latest"
+  class="inline-block px-6 py-3 bg-[#32CD32] text-gray-800 rounded-md hover:bg-[#228B22] shadow-lg"
+>
+  SkatehiveDocs
+</a>
+
     </div>
 
     <Chat client:load />
