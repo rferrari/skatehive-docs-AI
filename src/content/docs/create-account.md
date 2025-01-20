@@ -1,6 +1,16 @@
 ---
-position: 1
 title: Create Account
+id: create-account
+description: Learn how to create a Skatehive account, refer a friend, and set up Hive Keychain for secure login.
+sidebar-position: 1
+version: "latest"
+keywords:
+  - Skatehive
+  - Create account
+  - Hive Keychain
+  - Refer a friend
+  - Hive wallet
+  - Secure login
 ---
 # How to Create a Skatehive Account
 
@@ -13,7 +23,7 @@ title: Create Account
 }}>
 <video width="600" controls>
   <source src="https://ipfs.skatehive.app/ipfs/QmYuM1h51bddDuC44FoAQYp9FRF2CghCncULeS4T3bp727" type="video/mp4" />
-  Seu navegador não suporta a tag de vídeo.
+ 
 </video>
 </div>
 

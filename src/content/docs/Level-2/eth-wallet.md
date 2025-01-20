@@ -1,9 +1,20 @@
 ---
 sidebar_position: 1
-title: Setting Up Your Zerion Ethereum Wallet  
+title: Setting Up Your Zerion Ethereum Wallet
 description: Learn how to set up the Zerion Wallet for managing Ethereum and multi-chain assets. This guide covers everything from installing the extension to linking your wallet to Skatehive for rewards.
 version: "latest"
 id: "eth-wallet"
+keywords:
+  - Zerion
+  - Ethereum
+  - wallet
+  - multi-chain
+  - tutorial
+  - Skatehive
+  - rewards
+  - extension
+  - cryptocurrency
+  - dApps
 ---
 
 # Ethereum Wallet (Zerion)

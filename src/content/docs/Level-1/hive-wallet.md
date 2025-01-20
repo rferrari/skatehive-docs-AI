@@ -4,6 +4,16 @@ title: How to Create a Hive Wallet
 description: Step-by-step guide to creating a Hive Wallet using the Hive Keychain extension. Learn how to sign up on Ecency, back up your account, and securely save your credentials.
 version: "latest"
 id: "hive-wallet"
+keywords:
+  - Hive Wallet
+  - Hive Keychain
+  - Ecency
+  - cryptocurrency
+  - blockchain
+  - wallet setup
+  - backup
+  - secure credentials
+  - Hive account
 ---
 
 ### How to Create a Hive Wallet

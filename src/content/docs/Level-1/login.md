@@ -3,7 +3,16 @@ sidebar_position: 1
 title: How to Log in to Skatehive.app  
 description: A simple guide to logging into Skatehive using Hive Keychain. Learn how to import your Hive account, confirm transactions, and get started on Skatehive.
 version: "latest"
-"id": "login skatehive"
+id: "login skatehive"
+keywords:
+  - Skatehive
+  - Hive Keychain
+  - login
+  - Hive account
+  - authentication
+  - blockchain
+  - cryptocurrency
+  - tutorial
 ---
 
 ### How to Log in to Skatehive.app

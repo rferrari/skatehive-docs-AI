@@ -4,6 +4,19 @@ title: Fork Skatehive Guide
 description: fork skatehive
 sidebar_position: 1
 version: "latest"
+keywords:
+  - Skatehive
+  - fork
+  - guide
+  - development
+  - GitHub
+  - repository
+  - NodeJs
+  - pnpm
+  - deployment
+  - Vercel
+  - tutorial
+  - open-source
 ---
 
 # How to Fork Skatehive 🛹

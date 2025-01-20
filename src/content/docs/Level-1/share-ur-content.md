@@ -1,9 +1,22 @@
 ---
 sidebar_position: 4
-title: How to Publish a Post on Skatehive.app  
+title: How to Publish a Post on Skatehive.app
 description: A step-by-step guide to publishing posts on Skatehive. Learn how to create, upload media, add descriptions, and share your content with the Skatehive community.
 version: "latest"
 id: "share-ur-content"
+keywords:
+  - Skatehive
+  - publish
+  - post
+  - content
+  - media
+  - community
+  - guide
+  - images
+  - videos
+  - social media
+  - share
+  - tutorial
 ---
 
 # How to Publish a Post on Skatehive.app

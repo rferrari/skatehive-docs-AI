@@ -3,6 +3,21 @@ title: Discord Tutorial
 description: A comprehensive guide on using Discord for community building and coordination. Learn about rooms, roles, bots, and more to connect with others and make the most of Discord's features.
 id: "discord"
 sidebar_position: 5  
+keywords:
+  - Discord
+  - community building
+  - coordination
+  - roles
+  - bots
+  - rooms
+  - Skatehive
+  - governance
+  - proposals
+  - Web3
+  - NFT
+  - Hive
+  - crypto
+  - tutorials
 version: "latest"
 ---
 
