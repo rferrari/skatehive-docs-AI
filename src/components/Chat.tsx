@@ -39,22 +39,22 @@ export function Chat() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || `Error: ${response.status}`);
       }
-      
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.response 
+
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: data.response
       }]);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
       console.error('Chat error:', errorMessage);
-      setMessages(prev => [...prev, { 
-        role: 'error', 
+      setMessages(prev => [...prev, {
+        role: 'error',
         content: errorMessage
       }]);
     } finally {
@@ -84,13 +84,12 @@ export function Chat() {
         {messages.map((message, i) => (
           <div
             key={i}
-            className={`p-4 rounded-lg ${
-              message.role === 'user' 
+            className={`p-4 rounded-lg ${message.role === 'user'
                 ? 'bg-blue-100 ml-8'
                 : message.role === 'error'
-                ? 'bg-red-100 mx-8'
-                : 'bg-gray-100 mr-8'
-            }`}
+                  ? 'bg-red-100 mx-8'
+                  : 'bg-gray-100 mr-8'
+              }`}
           >
             {message.content}
           </div>
@@ -101,9 +100,9 @@ export function Chat() {
           </div>
         )}
       </div>
-      
+
       <form onSubmit={handleSubmit} className="p-4 border-t">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-col md:flex-row">
           <input
             type="text"
             value={input}
@@ -114,7 +113,8 @@ export function Chat() {
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
+            className="mt-2 md:mt-0 md:ml-2 px-4 py-2 rounded-md hover:bg-[#32CD32] disabled:opacity-50 text-lg transition"
+            style={{ backgroundColor: '#32CD32', color: '#222016' }}
           >
             Send
           </button>
