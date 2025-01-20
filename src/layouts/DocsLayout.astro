@@ -1,31 +1,64 @@
 ---
+// src/layouts/DocsLayout.astro
 import Navigation from '../components/Navigation.astro';
 import '../styles/docs.css';
 
-interface Props {
-  title: string;
-  version?: string;
-}
-
-const { title, version = 'latest' } = Astro.props;
+const categories = [
+  {
+    "type": "category",
+    "label": "Onboarding",
+    "items": [
+      { "type": "doc", "id": "intro" },
+      { "type": "doc", "id": "create-account" },
+      {
+        "type": "category",
+        "label": "Level 1",
+        "items": [
+          "Level - 1/login",
+          "Level - 1/hive-wallet",
+          "Level - 1/Discord-Share-Screen",
+          "Level - 1/share-ur-content",
+          "Level - 1/discord",
+          "Level - 1/nftog"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Level 2",
+        "items": [
+          "Level - 2/airdrop",
+          "Level - 2/eth-wallet",
+          "Level - 2/manage-hive",
+          "Level - 2/congratulations"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Dev",
+    "items": [
+      "Level - 0/fork-skatehive"
+    ]
+  }
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} - Documentation</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {import.meta.env.PROD && <link rel="stylesheet" href="/_pagefind/pagefind-ui.css" />}
+  
   </head>
-  <body class="bg-gray-50">
+  <body>
     <div class="flex min-h-screen">
-      <Navigation version={version} />
-      <main class="flex-1 px-4 py-8 sm:px-8 max-w-4xl mx-auto">
+      <Navigation categories={categories} />
+      <main class="flex-1 px-4 py-8 sm:px-8 max-w-4xl mx-auto">      
         <slot />
       </main>
     </div>
-    {import.meta.env.PROD && <script src="/_pagefind/pagefind-ui.js"></script>}
+    
   </body>
 </html>
