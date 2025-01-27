@@ -44,22 +44,88 @@ const categories = [
   }
 ];
 ---
-
 <!doctype html>
-<html lang="en" >
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  
+    <link rel="stylesheet" href="../styles/docs.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #1a1a2e; 
+        color: #e0e0e0; 
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .flex {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      nav {
+        background-color: #27293d;
+        padding: 1rem;
+        border-right: 1px solid #333;
+        width: 100%; 
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav ul li {
+        margin-bottom: 0.75rem;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #4fc3f7; 
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #42a5f5; 
+      }
+
+      main {
+        flex: 1;
+        padding: 1rem;
+        max-width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        .flex {
+          flex-direction: row; 
+        }
+
+        nav {
+          width: 300px; 
+          min-height: 100vh; 
+          padding: 2rem 1rem;
+        }
+
+        main {
+          padding: 2rem;
+          max-width: calc(100% - 300px); 
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="flex min-h-screen">
       <Navigation categories={categories} />
-      <main class="flex-1 px-4 py-8 sm:px-8 max-w-4xl mx-auto">      
+
+      <main class="flex-1 px-4 py-8 sm:px-8 max-w-4xl mx-auto">
         <slot />
       </main>
     </div>
-    
   </body>
 </html>
