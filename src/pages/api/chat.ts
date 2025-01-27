@@ -17,7 +17,7 @@ const headers = {
 };
 
 const SYSTEM_PROMPT = `
-You are a helpful documentation assistant.
+You are a helpful documentation assistant for Skatehive.
 
 Instructions:
 1. ALWAYS use the provided documentation to answer questions.
