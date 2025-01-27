@@ -61,10 +61,9 @@ export function Chat() {
       setLoading(false);
     }
   }
-
   if (isConfigured === false) {
     return (
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-lg mx-auto">
         <h2 className="text-lg font-semibold text-yellow-800 mb-2">Setup Required</h2>
         <p className="text-yellow-700 mb-4">
           To use the AI chat feature, you need to connect to Supabase and configure OpenAI:
@@ -79,8 +78,8 @@ export function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-[600px] max-h-[80vh] bg-gray-800 text-gray-100 rounded-lg shadow-md">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col h-[80vh] max-h-[80vh] bg-gray-800 text-gray-100 rounded-lg shadow-lg p-4 mx-auto max-w-3xl">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {messages.map((message, i) => (
           <div
             key={i}
@@ -89,31 +88,31 @@ export function Chat() {
                 : message.role === 'error'
                   ? 'bg-red-600 text-white mx-8'
                   : 'bg-gray-700 text-gray-100 mr-8'
-              }`}
+              } text-base md:text-lg`}
           >
             {message.content}
           </div>
         ))}
         {loading && (
-          <div className="bg-gray-700 p-4 rounded-lg mr-8 animate-pulse">
+          <div className="bg-gray-700 p-4 rounded-lg mr-8 animate-pulse text-base md:text-lg">
             <div>Thinking...</div>
           </div>
         )}
       </div>
 
       <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
-        <div className="flex gap-2 flex-col md:flex-row">
+        <div className="flex gap-4 flex-col md:flex-row">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question about the documentation..."
-            className="flex-1 px-4 py-2 border rounded-md bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-3 border rounded-md bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg"
           />
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 md:mt-0 md:ml-2 px-4 py-2 rounded-md bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition"
+            className="mt-3 md:mt-0 md:ml-4 px-6 py-3 rounded-md bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition"
           >
             Send
           </button>
