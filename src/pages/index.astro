@@ -4,16 +4,14 @@ import { Chat } from '../components/Chat';
 ---
 
 <Layout>
-  <main class="max-w-4xl mx-auto px-4 py-8">
-    
+  <main class="flex flex-col items-center justify-center min-h-screen bg-[#1E1E2E] text-white">
     <div class="mb-8 text-center">
-     <a 
-  href="/docs/latest"
-  class="inline-block px-6 py-3 bg-[#32CD32] text-gray-800 rounded-md hover:bg-[#228B22] shadow-lg"
->
-  SkatehiveDocs
-</a>
-
+      <a 
+        href="/docs/latest"
+        class="inline-block px-6 py-3 bg-[#4CAF50] text-white text-lg font-semibold rounded-lg hover:bg-[#3A9E40] shadow-lg transition duration-300"
+      >
+        SkatehiveDocs
+      </a>
     </div>
 
     <Chat client:load />

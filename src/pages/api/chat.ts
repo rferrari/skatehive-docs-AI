@@ -17,7 +17,7 @@ const headers = {
 };
 
 const SYSTEM_PROMPT = `
-You are a helpful documentation assistant. Answer questions based on the provided documentation context.
+You are a helpful documentation assistant.
 
 Instructions:
 1. ALWAYS use the provided documentation to answer questions.
@@ -41,12 +41,12 @@ async function readDocsFromDirectory(directoryPath: string): Promise<string> {
         content += await readDocsFromDirectory(fullPath);
       } else if (file.isFile() && (file.name.endsWith('.md') || file.name.endsWith('.mdx'))) {
         const fileContent = await fs.readFile(fullPath, 'utf-8');
-        console.log(`Conteúdo do arquivo ${file.name}:`, fileContent);
+        console.log(`File content ${file.name}:`, fileContent);
         content += fileContent + '\n\n';
       }
     }
   } catch (error) {
-    console.error(`Erro ao ler o diretório ${directoryPath}:`, error);
+    console.error(`Error reading directory ${directoryPath}:`, error);
   }
   return content;
 }
@@ -125,7 +125,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Read all .md and .mdx contents of the documentation folder
     const docsContent = await readDocsFromDirectory(docsDirectoryPath);
-    console.log("Conteúdo dos Docs:", docsContent);
+    console.log("Docs Contents:", docsContent);
 
     // Step 1: Search for keywords in Supabase
     const { data: keywordResults, error: keywordError } = await supabase
@@ -137,18 +137,18 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
     if (keywordError) {
-      console.error('Erro de pesquisa por palavra-chave:', keywordError);
+      console.error('Keyword search error:', keywordError);
     } else if (keywordResults?.length > 0) {
       // Split the docs content into smaller parts for sending
       const maxTokens = 3000;
       const docsParts = splitContent(docsContent, maxTokens);
 
       // Build the context including the Supabase docs and results blocks
-      let context = `${SYSTEM_PROMPT}\n\nDocumentação relevante:\n\n`;
+      let context = `${SYSTEM_PROMPT}\n\nProvided Documentation:\n\n`;
       for (const part of docsParts) {
         context += `${part}\n\n`;
       }
-      context += `\nURLs de origem:\n${keywordResults
+      context += `\nSource URLs:\n${keywordResults
         .map((doc) => `- ${doc.url}`)
         .join('\n')}`;
 
@@ -194,7 +194,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const documents = vectorResults || [];
-    let context = `${SYSTEM_PROMPT}\n\nRelevant documentation:\n\n`;
+    let context = `${SYSTEM_PROMPT}\n\nProvided Documentation:\n\n`;
 
     for (const doc of documents) {
       context += `${doc.content}\n\n`;
