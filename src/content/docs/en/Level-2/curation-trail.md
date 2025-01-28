@@ -1,5 +1,5 @@
 ---
-title: How to Join the Skatehive Curation Trail on the Hive Blockchain
+title: Curation Trail
 description: Learn how to join the Skatehive Curation Trail on the Hive Blockchain to support skateboarding content and creators while earning curation rewards.
 id: join-skatehive-curation-trail
 keywords: 
