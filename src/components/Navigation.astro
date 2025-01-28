@@ -1,14 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
-
 interface Props {
   version?: string;
 }
-
 const { version = 'latest' } = Astro.props;
 const docs = await getCollection('docs', ({ data }) => data.version === version);
 const sortedDocs = docs.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-
 console.log('Navigation docs:', docs.map(d => ({
   slug: d.slug,
   title: d.data.title,
@@ -45,7 +42,6 @@ console.log('Navigation docs:', docs.map(d => ({
     })}
   </ul>
 </nav>
-
 <button 
   id="homeButton" 
   class="fixed top-4 right-4 bg-[#32CD32] text-white p-3 rounded-md z-10 shadow-md transition duration-300 hover:bg-[#28A428]"
@@ -53,7 +49,6 @@ console.log('Navigation docs:', docs.map(d => ({
    Home
 </button>
 
-<!-- Botão para abrir o menu -->
 <button id="openMenu" class="fixed top-4 left-4 bg-[#32CD32] text-white p-3 rounded-md md:hidden z-10 hover:bg-[#28A428]">
   ☰
 </button>
@@ -66,23 +61,22 @@ console.log('Navigation docs:', docs.map(d => ({
 
   openMenuButton?.addEventListener('click', () => {
     menu?.classList.remove('-translate-x-full');
-    body.classList.add('no-scroll'); // Prevent scrolling in the background
+    body.classList.add('no-scroll'); 
   });
 
   closeMenuButton?.addEventListener('click', () => {
     menu?.classList.add('-translate-x-full');
-    body.classList.remove('no-scroll'); // Restore scrolling in the background
+    body.classList.remove('no-scroll'); 
   });
 
    // Home button
   const homeButton = document.getElementById('homeButton');
   homeButton?.addEventListener('click', () => {
-    window.location.href = '/'; // Redirect to the homepage
+    window.location.href = '/'; 
   });
 </script>
 
 <style is:global>
-  /* Global styles for buttons */
   #homeButton, #openMenu {
     padding: 10px 15px;
     border-radius: 5px;
@@ -90,7 +84,6 @@ console.log('Navigation docs:', docs.map(d => ({
     transition: background-color 0.3s ease;
   }
 
-  /* Sidebar styles */
   #sidebarMenu {
     background-color: #1E1E2E;
     color: #FFFFFF;
