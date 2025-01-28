@@ -42,7 +42,7 @@ Click on **"Login with Keychain"**.
 
 Type in your **Hive username** in the login prompt.
 
-![Login Screen](../../../../src/assets/Tuto-logIn/1.png)
+![Login Screen](../../../../../src/assets/Tuto-logIn/1.png)
 
 ---
 
@@ -50,7 +50,7 @@ Type in your **Hive username** in the login prompt.
 
 Approve the **Keychain transaction** to proceed.
 
-![Transaction Confirmation](../../../../src/assets/Tuto-logIn/2.png)
+![Transaction Confirmation](../../../../../src/assets/Tuto-logIn/2.png)
 
 ---
 
@@ -58,4 +58,4 @@ Approve the **Keychain transaction** to proceed.
 
 You’re all set! Explore and enjoy **Skatehive**.
 
-![Welcome Screen](../../../../src/assets/Tuto-logIn/3.png)
+![Welcome Screen](../../../../../src/assets/Tuto-logIn/3.png)

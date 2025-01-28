@@ -1,7 +1,8 @@
 ---
 id: "fork"
-title: Fork Skatehive Guide
+title: Fork Skatehive Guide 
 description: fork skatehive
+lang: "en"
 sidebar_position: 1
 version: "latest"
 keywords:
@@ -18,7 +19,6 @@ keywords:
   - tutorial
   - open-source
 ---
-
 # How to Fork Skatehive 🛹
 
 We are going to make this tutorial for anyone who wants to create their own Skatehive-powered portal, like <a href="https://skatehive.app" class="button-link" target="_blank">**Skatehive.app**</a>.
@@ -87,7 +87,7 @@ eval "$(ssh-agent -s)"
 
 
 and give it a Title and paste the contet in Key
-![Alt ​​text](../../../../src/assets/Tuto-Dev/1.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/1.png)
 
 
 
@@ -97,11 +97,11 @@ and give it a Title and paste the contet in Key
 
  **[Click Fork Button](https://github.com/SkateHive/nextskateapp)** 
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/2.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/2.png)
 
 This will create your own version of the repo in your account: 
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/3.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/3.png)
 
 Ok, now you are going to clone the repository of files into your machine, which is basically download the app: 
 
@@ -109,7 +109,7 @@ Ok, now you are going to clone the repository of files into your machine, which 
 git clone git@github.com:<your-username>/<your-fork>.git
 ```
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/4.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/4.png)
 
 
 Now navigate to the cloned repository by: 
@@ -153,11 +153,11 @@ pnpm i
 This step ensures that you have all the necessary libraries and tools in your development environment to build and run the application.
 
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/5.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/5.png)
 Wait a little, drink some "coffee"...
 
 You should see that when its over: 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/6.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/6.png)
 
 > If you get an error in any step you can throw it in chat-gpt or ask us in [skatehive discord](https://discord.gg/skatehive) and see which one helps you faster 
 
@@ -181,12 +181,12 @@ Now run the application you just installed:
 ```
 pnpm dev
 ```
-![Alt ​​text](../../../../src/assets/Tuto-Dev/7.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/7.png)
 
 
 Now open https://localhost:3000 <a href="https://skatehive.app" class="button-link" target="_blank"></a> and you will see the same app as <a href="https://skatehive.app" class="button-link" target="_blank">**Website Skatehive**</a>.
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/8.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/8.png)
 
 That means that you are running the app using your own computer as a server through the port 3000 
 
@@ -197,7 +197,7 @@ I usually use `code .` command in the terminal folder to easily open the folder 
 
 Make a silly change, like change the footer of it. 
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/9.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/9.png)
 
 
 This project is built with TypeScript and incorporates Chakra UI for the frontend. For Hive-related tasks, we rely on the <a href="https://play.hive-keychain.com/" class="button-link" target="_blank">**Website Keychain SDK**</a> and dhive libraries. Additionally, to facilitate interactions with Ethereum, Bitcoin, and various other blockchains, we leverage the capabilities of <a href="https://github.com/BitHighlander/pioneer-react#readme" class="button-link" target="_blank">**WebSite Pioneer-React**</a>.
@@ -239,17 +239,17 @@ Now you can go to your github account and check if the it was updated
 ## Go to vercel.com 
 
 1. Make an account with your github account 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/10.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/10.png)
 
 2. Install Github Extension it offers 
 3. Select the repository 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/11.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/11.png)
 
 4. Click in Deploy
 
 You should see something like this: 
 
-![Alt ​​text](../../../../src/assets/Tuto-Dev/12.png)
+![Alt ​​text](../../../../../src/assets/Tuto-Dev/12.png)
  
 
 You can navigate now to: 

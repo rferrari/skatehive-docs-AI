@@ -31,7 +31,7 @@ Follow these steps to create your Hive wallet.
 - Install the **Hive Keychain** browser extension.  
 - Once installed, reload the page to activate the extension.
 
-![Install Hive Keychain](../../../../src/assets/Hive-Wallet/1.png)
+![Install Hive Keychain](../../../../../src/assets/Hive-Wallet/1.png)
 
 ---
 
@@ -40,7 +40,7 @@ Follow these steps to create your Hive wallet.
 - Go to <a href="https://ecency.com/signup" class="button-link" target="_blank">**Website Ecency Signup**</a> to create your new account.
 - Choose your **username** and enter your **email address**.
 
-![Signup Page](../../../../src/assets/Hive-Wallet/2.png)
+![Signup Page](../../../../../src/assets/Hive-Wallet/2.png)
 
 ---
 
@@ -52,7 +52,7 @@ Follow these steps to create your Hive wallet.
 > **Important:**  
 > Store this backup in a **safe place**. It’s your only way to recover your account.
 
-![Account Backup](../../../../src/assets/Hive-Wallet/3.png)
+![Account Backup](../../../../../src/assets/Hive-Wallet/3.png)
 
 ---
 
@@ -61,7 +61,7 @@ Follow these steps to create your Hive wallet.
 - Enter your **username** and **password** in the Hive Keychain browser extension.  
 - This will securely save your credentials for easy access.
 
-![Save Credentials](../../../../src/assets/Hive-Wallet/4.png)
+![Save Credentials](../../../../../src/assets/Hive-Wallet/4.png)
 
 ---
 

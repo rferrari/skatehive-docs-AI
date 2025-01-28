@@ -66,7 +66,7 @@ Follow these steps to publish your content on Skatehive:
 
 ---
 
-![Publish Post](../../../../src/assets/Tuto--basic/1.png)
+![Publish Post](../../../../../src/assets/Tuto--basic/1.png)
 
 ---
 
