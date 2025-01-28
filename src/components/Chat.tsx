@@ -1,3 +1,4 @@
+import 'animate.css';
 import React, { useEffect, useState } from 'react';
 
 export function Chat() {
@@ -77,48 +78,57 @@ export function Chat() {
     );
   }
 
+  function removeLinks(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, ''); 
+  }
+  
   return (
     <div className="flex flex-col h-[85vh] max-h-[85vh] bg-gray-800 text-gray-100 rounded-lg shadow-lg p-4 mx-auto w-full max-w-4xl">
-    <div className="flex-1 overflow-y-auto p-4 space-y-3">
+    <div className="flex flex-col justify-start items-center overflow-y-auto p-4 space-y-8 lg:space-y-10 h-full">
+  <div className="w-full max-w-[600px]">
     {messages.map((message, i) => (
       <div
         key={i}
-        className={`p-4 rounded-xl shadow ${
+        className={`p-4 rounded-xl shadow-lg transform transition-transform duration-500 ease-in-out ${
           message.role === 'user'
-            ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white self-end max-w-full sm:max-w-[75%] lg:max-w-[60%]'
+            ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white self-end max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
             : message.role === 'error'
-            ? 'bg-red-700 text-white self-center max-w-full sm:max-w-[75%] lg:max-w-[60%]'
-            : 'bg-gray-700 text-gray-200 self-start max-w-full sm:max-w-[75%] lg:max-w-[60%]'
-        } text-base md:text-lg`}
+            ? 'bg-red-700 text-white self-center max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
+            : 'bg-gray-700 text-gray-200 self-start max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
+        } text-base md:text-lg break-words`}
       >
-        {message.content}
+        {removeLinks(message.content)}
       </div>
     ))}
-      {loading && (
-      <div className="bg-gray-700 p-4 rounded-xl self-start max-w-full sm:max-w-[75%] lg:max-w-[60%] animate-pulse text-base md:text-lg">
+    {loading && (
+      <div className="bg-gray-700 p-4 rounded-xl self-start max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
         <div>Thinking...</div>
       </div>
     )}
   </div>
-  
-    <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask a question..."
-          className="flex-1 px-4 py-3 border rounded-lg bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition font-semibold"
-        >
-          Send
-        </button>
-      </div>
-    </form>
-  </div>
+</div>
+
+
+
+      <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a question..."
+            className="flex-1 px-4 py-3 border rounded-lg bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition font-semibold"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
   );
-}
+}  
