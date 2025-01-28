@@ -78,46 +78,47 @@ export function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-[80vh] max-h-[80vh] bg-gray-800 text-gray-100 rounded-lg shadow-lg p-4 mx-auto max-w-3xl">
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {messages.map((message, i) => (
-          <div
-            key={i}
-            className={`p-4 rounded-lg ${message.role === 'user'
-                ? 'bg-blue-600 text-white ml-8'
-                : message.role === 'error'
-                  ? 'bg-red-600 text-white mx-8'
-                  : 'bg-gray-700 text-gray-100 mr-8'
-              } text-base md:text-lg`}
-          >
-            {message.content}
-          </div>
-        ))}
-        {loading && (
-          <div className="bg-gray-700 p-4 rounded-lg mr-8 animate-pulse text-base md:text-lg">
-            <div>Thinking...</div>
-          </div>
-        )}
+    <div className="flex flex-col h-[85vh] max-h-[85vh] bg-gray-800 text-gray-100 rounded-lg shadow-lg p-4 mx-auto w-full max-w-4xl">
+    <div className="flex-1 overflow-y-auto p-4 space-y-3">
+    {messages.map((message, i) => (
+      <div
+        key={i}
+        className={`p-4 rounded-xl shadow ${
+          message.role === 'user'
+            ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white self-end max-w-full sm:max-w-[75%] lg:max-w-[60%]'
+            : message.role === 'error'
+            ? 'bg-red-700 text-white self-center max-w-full sm:max-w-[75%] lg:max-w-[60%]'
+            : 'bg-gray-700 text-gray-200 self-start max-w-full sm:max-w-[75%] lg:max-w-[60%]'
+        } text-base md:text-lg`}
+      >
+        {message.content}
       </div>
-
-      <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
-        <div className="flex gap-4 flex-col md:flex-row">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question about the documentation..."
-            className="flex-1 px-4 py-3 border rounded-md bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-3 md:mt-0 md:ml-4 px-6 py-3 rounded-md bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition"
-          >
-            Send
-          </button>
-        </div>
-      </form>
-    </div>
+    ))}
+      {loading && (
+      <div className="bg-gray-700 p-4 rounded-xl self-start max-w-full sm:max-w-[75%] lg:max-w-[60%] animate-pulse text-base md:text-lg">
+        <div>Thinking...</div>
+      </div>
+    )}
+  </div>
+  
+    <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask a question..."
+          className="flex-1 px-4 py-3 border rounded-lg bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition font-semibold"
+        >
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
   );
 }
