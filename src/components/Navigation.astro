@@ -40,14 +40,16 @@ console.log('Navigation docs:', docs.map(d => ({
         </li>
       );
     })}
+    <li>
+      <a 
+        href="/"
+        class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
+      >
+        Home
+      </a>
+    </li>
   </ul>
 </nav>
-<button 
-  id="homeButton" 
-  class="fixed top-4 right-4 bg-[#32CD32] text-white p-3 rounded-md z-10 shadow-md transition duration-300 hover:bg-[#28A428]"
->
-   Home
-</button>
 
 <button id="openMenu" class="fixed top-4 left-4 bg-[#32CD32] text-white p-3 rounded-md md:hidden z-10 hover:bg-[#28A428]">
   ☰
@@ -67,12 +69,6 @@ console.log('Navigation docs:', docs.map(d => ({
   closeMenuButton?.addEventListener('click', () => {
     menu?.classList.add('-translate-x-full');
     body.classList.remove('no-scroll'); 
-  });
-
-   // Home button
-  const homeButton = document.getElementById('homeButton');
-  homeButton?.addEventListener('click', () => {
-    window.location.href = '/'; 
   });
 </script>
 
@@ -101,7 +97,6 @@ console.log('Navigation docs:', docs.map(d => ({
     transform: translateX(5px);
   }
 
-  /* Responsiveness */
   @media (max-width: 768px) {
     nav {
       width: 250px;
@@ -109,17 +104,17 @@ console.log('Navigation docs:', docs.map(d => ({
     }
 
     #openMenu {
-      z-index: 10; /* Make sure it is not above the menu */
+      z-index: 10; 
     }
   }
 
   @media (min-width: 768px) {
     #openMenu {
-      display: none; /* Hide the menu open button on desktop */
+      display: none; 
     }
 
     #sidebarMenu {
-      transform: none; /* The menu will be visible on desktop */
+      transform: none; 
     }
   }
 </style>
