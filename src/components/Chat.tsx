@@ -1,5 +1,6 @@
 import 'animate.css';
 import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export function Chat() {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant' | 'error', content: string }>>([]);
@@ -33,23 +34,23 @@ export function Chat() {
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
-
+  
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
       });
-
+  
       const data = await response.json();
-
+      console.log('API Response:', data);
       if (!response.ok) {
         throw new Error(data.error || `Error: ${response.status}`);
       }
-
+  
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: data.response
+        content: formatMessage(data.response) 
       }]);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
@@ -62,10 +63,15 @@ export function Chat() {
       setLoading(false);
     }
   }
+
+  function formatMessage(text: string) {
+    return text.trim();
+  }
+
   if (isConfigured === false) {
     return (
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-lg mx-auto">
-        <h2 className="text-lg font-semibold text-yellow-800 mb-2">Setup Required</h2>
+        <h2 className="text-lg font-semibold text-yellow-800 mb-2">⚠️ Setup Required</h2>
         <p className="text-yellow-700 mb-4">
           To use the AI chat feature, you need to connect to Supabase and configure OpenAI:
         </p>
@@ -78,38 +84,27 @@ export function Chat() {
     );
   }
 
-  function removeLinks(text) {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, ''); 
-  }
-  
   return (
-    <div className="flex flex-col h-[85vh] max-h-[85vh] bg-gray-800 text-gray-100 rounded-lg shadow-lg p-4 mx-auto w-full max-w-4xl">
-    <div className="flex flex-col justify-start items-center overflow-y-auto p-4 space-y-8 lg:space-y-10 h-full">
-  <div className="w-full max-w-[600px]">
-    {messages.map((message, i) => (
-      <div
-        key={i}
-        className={`p-4 rounded-xl shadow-lg transform transition-transform duration-500 ease-in-out ${
-          message.role === 'user'
-            ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white self-end max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
-            : message.role === 'error'
-            ? 'bg-red-700 text-white self-center max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
-            : 'bg-gray-700 text-gray-200 self-start max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate__animated animate__fadeIn'
-        } text-base md:text-lg break-words`}
-      >
-        {removeLinks(message.content)}
+    <div className="flex flex-col h-[85vh] max-h-[85vh] bg-gray-900 text-gray-100 rounded-lg shadow-lg p-4 mx-auto w-full max-w-4xl">
+      <div className="flex flex-col justify-start items-center overflow-y-auto p-4 space-y-4 h-full w-full">
+        {messages.map((message, i) => (
+          <div 
+            key={i} 
+            className={`p-4 rounded-xl shadow-md transition-transform duration-500 ease-in-out 
+              ${message.role === 'user' ? 'bg-blue-600 text-white self-end' :
+                message.role === 'error' ? 'bg-red-700 text-white self-center' :
+                  'bg-gray-700 text-gray-200 self-start'} 
+              text-base md:text-lg break-words w-full sm:max-w-[75%] lg:max-w-[100%] animate__animated animate__fadeIn`}
+          >
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
+        ))}
+        {loading && (
+          <div className="bg-gray-700 p-4 rounded-xl self-start w-full sm:max-w-[75%] lg:max-w-[100%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
+            <div>Thinking...</div>
+          </div>
+        )}
       </div>
-    ))}
-    {loading && (
-      <div className="bg-gray-700 p-4 rounded-xl self-start max-w-full sm:max-w-[75%] lg:max-w-[100%] xl:max-w-[100%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
-        <div>Thinking...</div>
-      </div>
-    )}
-  </div>
-</div>
-
-
 
       <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -118,7 +113,7 @@ export function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
-            className="flex-1 px-4 py-3 border rounded-lg bg-gray-900 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
+            className="flex-1 px-4 py-3 border rounded-lg bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
           />
           <button
             type="submit"
@@ -131,4 +126,4 @@ export function Chat() {
       </form>
     </div>
   );
-}  
+}
