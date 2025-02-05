@@ -1,83 +1,123 @@
 ---
 import { getCollection } from 'astro:content';
+
 interface Props {
   version?: string;
 }
+
 const { version = 'latest' } = Astro.props;
 const docs = await getCollection('docs', ({ data }) => data.version === version);
-const sortedDocs = docs.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-console.log('Navigation docs:', docs.map(d => ({
-  slug: d.slug,
-  title: d.data.title,
-  version: d.data.version
-})));
+
+const sortedDocs = docs.sort((a, b) => Number(a.data.order || 0) - Number(b.data.order || 0));
+
+const docsByFolder = sortedDocs.reduce((acc, doc) => {
+  if (!doc.slug) return acc;
+
+  const slugParts = doc.slug.split('/');
+  const folderPath = slugParts.length > 1 ? slugParts.slice(0, -1).join('/') : 'root';
+
+  if (!acc[folderPath]) acc[folderPath] = [];
+  acc[folderPath].push(doc);
+
+  return acc;
+}, {} as Record<string, typeof docs>);
+
+const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
+  const numA = parseInt(a.match(/\d+$/)?.[0] ?? "0", 10);
+  const numB = parseInt(b.match(/\d+$/)?.[0] ?? "0", 10);
+  
+  const prefixA = a.replace(/\d+$/, "");
+  const prefixB = b.replace(/\d+$/, "");
+
+  return prefixA.localeCompare(prefixB) || numA - numB;
+});
 ---
 
-<nav id="sidebarMenu" class="fixed top-0 left-0 h-full bg-[#1E1E2E] text-white shadow-lg transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:shadow-none md:w-64 z-20 overflow-y-auto">
-  <div class="p-4 flex items-center justify-between md:hidden">
-    <h2 class="text-lg font-semibold">Menu</h2>
-    <button id="closeMenu" class="text-gray-300 hover:text-white">
-      ✕
+<!-- Navbar -->
+<nav class="bg-[#1E1E2E] text-white fixed top-0 left-0 right-0 h-14 shadow-md z-10">
+  <div class="flex items-center justify-between px-6 h-full">
+    <!-- Botão para abrir o menu no mobile -->
+    <button id="openMenu" class="md:hidden text-white p-2 rounded focus:outline-none" aria-label="Open menu">
+      ☰
     </button>
-  </div>
 
-  <div class="p-4 hidden md:block">
+    <!-- Logo e título -->
+    <a href="/" class="text-lg font-semibold hover:text-gray-300 transition">
+      IA Docs
+    </a>
+    <a 
+      href="/"
+      class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
+    >
+      Home
+    </a>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<aside id="sidebarMenu" class="fixed top-14 left-0 h-full w-64 bg-[#1E1E2E] text-white shadow-lg transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:shadow-none overflow-y-auto">
+  <div class="p-4">
     <div id="search" class="pagefind-ui"></div>
   </div>
 
-  <ul class="space-y-2 p-4">
-    {sortedDocs.map((doc) => {
-      const [version, ...slugParts] = doc.slug.split('/');
-      const slug = slugParts.join('/');
-      return (
-        <li key={doc.slug}>
-          <a 
-            href={`/docs/${version}/${slug}`}
-            class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
-          >
-            {doc.data.title}
-          </a>
+  <ul class="space-y-4 p-4">
+    {orderedDocsByFolder.length > 0 ? (
+      orderedDocsByFolder.map(([folder, docs]) => (
+        <li key={folder}>
+          <h3 class="text-gray-400 text-sm uppercase font-semibold px-4 py-2">{folder}</h3>
+          <ul class="space-y-2 pl-4">
+            {docs.map((doc) => (
+              <li key={doc.slug}>
+                <a 
+                  href={`/docs/${doc.slug}`}
+                  class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
+                >
+                  {doc.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
         </li>
-      );
-    })}
-    <li>
-      <a 
-        href="/"
-        class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
-      >
-        Home
-      </a>
-    </li>
+      ))
+    ) : (
+      <p class="text-gray-500 px-4">Nenhuma documentação encontrada.</p>
+    )}
   </ul>
-</nav>
+</aside>
 
-<button id="openMenu" class="fixed top-4 left-4 bg-[#32CD32] text-white p-3 rounded-md md:hidden z-10 hover:bg-[#28A428]">
-  ☰
-</button>
+<!-- Conteúdo Principal -->
+<main class="pt-14">
+  <slot />
+</main>
 
 <script>
   const openMenuButton = document.getElementById('openMenu');
-  const closeMenuButton = document.getElementById('closeMenu');
   const menu = document.getElementById('sidebarMenu');
   const body = document.body;
 
   openMenuButton?.addEventListener('click', () => {
-    menu?.classList.remove('-translate-x-full');
-    body.classList.add('no-scroll'); 
+    menu?.classList.toggle('-translate-x-full');
+    body.classList.toggle('no-scroll');
   });
 
-  closeMenuButton?.addEventListener('click', () => {
-    menu?.classList.add('-translate-x-full');
-    body.classList.remove('no-scroll'); 
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !openMenuButton.contains(e.target) && window.innerWidth < 768) {
+      menu.classList.add('-translate-x-full');
+      body.classList.remove('no-scroll');
+    }
   });
 </script>
 
 <style is:global>
-  #homeButton, #openMenu {
-    padding: 10px 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+  body.no-scroll {
+    overflow: hidden;
+  }
+  nav {
+    height: 56px;
+  }
+
+  main {
+    padding-top: 56px;
   }
 
   #sidebarMenu {
@@ -98,23 +138,15 @@ console.log('Navigation docs:', docs.map(d => ({
   }
 
   @media (max-width: 768px) {
-    nav {
+    aside {
       width: 250px;
       z-index: 20;
-    }
-
-    #openMenu {
-      z-index: 10; 
     }
   }
 
   @media (min-width: 768px) {
     #openMenu {
-      display: none; 
-    }
-
-    #sidebarMenu {
-      transform: none; 
+      display: none;
     }
   }
 </style>
