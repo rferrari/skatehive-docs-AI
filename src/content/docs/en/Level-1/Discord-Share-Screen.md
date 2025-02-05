@@ -2,7 +2,6 @@
 title: How to Share Your Discord Screen
 description: A step-by-step guide on how to share your screen on Discord, both on your PC and mobile. Perfect for gaming, presentations, and group calls.
 version: "latest"
-lang: "en"
 id: "discord-share-screen"
 keywords:
   - Discord
