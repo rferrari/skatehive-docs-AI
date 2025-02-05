@@ -1,12 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
 
+// Get the language based on the current URL
+const currentPath = Astro.url.pathname; // Example: "/docs/en/intro" or "/docs/pt/intro"
+const lang = currentPath.includes('/pt/') ? 'pt' : 'en';
+
+// Define the URL to switch between languages
+const langSwitchUrl = lang === 'en' 
+  ? currentPath.replace('/docs/en/', '/docs/pt/') 
+  : currentPath.replace('/docs/pt/', '/docs/en/');
+
 interface Props {
   version?: string;
 }
 
 const { version = 'latest' } = Astro.props;
-const docs = await getCollection('docs', ({ data }) => data.version === version);
+const docs = await getCollection('docs', ({ data }) => data.version === version && data.lang === lang);
 
 const sortedDocs = docs.sort((a, b) => Number(a.data.order || 0) - Number(b.data.order || 0));
 
@@ -36,15 +45,24 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
 <!-- Navbar -->
 <nav class="bg-[#1E1E2E] text-white fixed top-0 left-0 right-0 h-14 shadow-md z-10">
   <div class="flex items-center justify-between px-6 h-full">
-    <!-- Botão para abrir o menu no mobile -->
+    <!-- Button to open the menu on mobile -->
     <button id="openMenu" class="md:hidden text-white p-2 rounded focus:outline-none" aria-label="Open menu">
       ☰
     </button>
 
-    <!-- Logo e título -->
+    <!-- Logo and title -->
     <a href="/" class="text-lg font-semibold hover:text-gray-300 transition">
       IA Docs
     </a>
+
+    <!-- Language switch button -->
+    <a 
+      href={langSwitchUrl}
+      class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
+    >
+      🌍 {lang === 'en' ? 'PT' : 'EN'}
+    </a>
+
     <a 
       href="/"
       class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
@@ -80,12 +98,12 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
         </li>
       ))
     ) : (
-      <p class="text-gray-500 px-4">Nenhuma documentação encontrada.</p>
+      <p class="text-gray-500 px-4">No documentation found.</p>
     )}
   </ul>
 </aside>
 
-<!-- Conteúdo Principal -->
+<!-- Main Content -->
 <main class="pt-14">
   <slot />
 </main>
