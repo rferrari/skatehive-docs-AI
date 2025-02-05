@@ -10,9 +10,11 @@ keywords:
   - Refer a friend
   - Hive wallet
   - Secure login
-  version: "latest"
+
+version: "latest"
 lang: "en"
 ---
+
 # How to Create a Skatehive Account
 
 
