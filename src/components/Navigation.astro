@@ -2,13 +2,19 @@
 import { getCollection } from 'astro:content';
 
 // Get the language based on the current URL
-const currentPath = Astro.url.pathname; // Example: "/docs/en/intro" or "/docs/pt/intro"
-const lang = currentPath.includes('/pt/') ? 'pt' : 'en';
+const currentPath = Astro.url.pathname; // Example: "/docs/en/intro", "/docs/pt/intro", "/docs/lg/intro"
+const lang = currentPath.includes('/pt/') ? 'pt' : currentPath.includes('/lg/') ? 'lg' : 'en';
 
 // Define the URL to switch between languages
-const langSwitchUrl = lang === 'en' 
-  ? currentPath.replace('/docs/en/', '/docs/pt/') 
-  : currentPath.replace('/docs/pt/', '/docs/en/');
+const langSwitchUrl = {
+  en: currentPath.replace('/docs/pt/', '/docs/en/').replace('/docs/lg/', '/docs/en/'),
+  pt: currentPath.replace('/docs/en/', '/docs/pt/').replace('/docs/lg/', '/docs/pt/'),
+  lg: currentPath.replace('/docs/en/', '/docs/lg/').replace('/docs/pt/', '/docs/lg/')
+};
+
+interface Props {
+  version?: string;
+}
 
 interface Props {
   version?: string;
@@ -55,26 +61,22 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
       IA Docs
     </a>
 
-    <!-- Language switch button -->
+      <!-- Language switch button -->
     <div class="relative">
       <button id="languageButton" class="px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200 flex items-center">
-        🌍 {lang === 'en' ? 'English' : 'Português'}
+        🌍 {lang === 'en' ? 'English' : lang === 'pt' ? 'Português' : 'Luganda'}
         <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
         </svg>
       </button>
       <div id="languageMenu" class="absolute hidden bg-[#3F3F5B] text-white rounded-md shadow-lg mt-2 w-32">
-        <a href={currentPath.replace('/docs/en/', '/docs/pt/')} class="block px-4 py-2 hover:bg-[#565676] transition">Português</a>
-        <a href={currentPath.replace('/docs/pt/', '/docs/en/')} class="block px-4 py-2 hover:bg-[#565676] transition">English</a>
+        <a href={langSwitchUrl['en']} class="block px-4 py-2 hover:bg-[#565676] transition">English</a>
+        <a href={langSwitchUrl['pt']} class="block px-4 py-2 hover:bg-[#565676] transition">Português</a>
+        <a href={langSwitchUrl['lg']} class="block px-4 py-2 hover:bg-[#565676] transition">Luganda</a>
       </div>
     </div>
+  </div>
 
-    <a 
-      href="/"
-      class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
-    >
-      Home
-    </a>
   </div>
 </nav>
 
