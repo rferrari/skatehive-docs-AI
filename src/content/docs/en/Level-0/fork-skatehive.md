@@ -5,6 +5,7 @@ description: fork skatehive
 lang: "en"
 sidebar_position: 1
 version: "latest"
+lang: "en"
 keywords:
   - Skatehive
   - fork

@@ -19,6 +19,7 @@ keywords:
   - crypto
   - tutorials
 version: "latest"
+lang: "en"
 ---
 
 # Discord Tutorial: Connect, Share, and Create

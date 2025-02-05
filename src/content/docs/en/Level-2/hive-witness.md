@@ -12,6 +12,7 @@ keywords:
 - voting 
 - skateboarding
 version: "latest"
+lang: "en"
 sidebar_position: 7
 ---
 

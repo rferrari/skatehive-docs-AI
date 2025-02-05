@@ -11,6 +11,7 @@ keywords:
 - wallet,
 - tutorial
 version: "latest"
+lang: "en"
 ---
 
 ### How to get lucky

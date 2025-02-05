@@ -3,7 +3,6 @@ title: Create Account
 id: create-account
 description: Learn how to create a Skatehive account, refer a friend, and set up Hive Keychain for secure login.
 sidebar-position: 1
-version: "latest"
 keywords:
   - Skatehive
   - Create account
@@ -11,6 +10,8 @@ keywords:
   - Refer a friend
   - Hive wallet
   - Secure login
+  version: "latest"
+lang: "en"
 ---
 # How to Create a Skatehive Account
 

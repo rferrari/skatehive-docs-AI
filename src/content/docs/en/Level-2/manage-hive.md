@@ -3,6 +3,7 @@ sidebar_position: 3
 title: Managing Your Hive Tokens
 description: Learn how to manage your Hive tokens, including Hive, Hive Power, Hive Dollars, and more. This guide will help you understand how to maximize your influence and rewards within the Hive ecosystem.
 version: "latest"
+lang: "en"
 id: "manager-hive"
 keywords:
   - Hive

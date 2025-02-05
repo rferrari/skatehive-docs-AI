@@ -10,6 +10,7 @@ keywords:
   - curation
   - delegation
 version: "latest"
+lang: "en"
 sidebar_position: 5
 ---
 

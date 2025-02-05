@@ -14,6 +14,7 @@ keywords:
 - community,
 - curation rewards
 version: "latest"
+lang: "en"
 sidebar_position: 6
 ---
 

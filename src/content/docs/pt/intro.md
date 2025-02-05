@@ -9,6 +9,7 @@ keywords:
 - "Skatehive"
 - "comunidade de skate"
 - "mídia de propriedade de skatistas"
+version: "latest"
 lang: "pt"
 order: 1
 ---
