@@ -2,6 +2,7 @@
 title: Como Compartilhar Sua Tela no Discord 
 description: "Aprenda como compartilhar sua tela no Discord, tanto no PC quanto no celular, com o servidor Skatehive."
 lang: "pt"
+version: "latest"
 keywords: 
 - compartilhar tela 
 - discord

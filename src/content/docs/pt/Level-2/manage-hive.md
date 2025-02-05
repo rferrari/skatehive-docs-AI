@@ -3,6 +3,8 @@ title: Como Gerenciar Seus Tokens Hive
 sidebar_position: 3
 keywords: Gerenciar Hive, Hive Power, Hive Dollars, Poupança Hive, Tokens Hive, Guia Hive
 description: Aprenda a gerenciar seus tokens Hive, incluindo Hive Power, Hive Dollars, e Poupança. Descubra como maximizar seu poder de voto e recompensas na blockchain Hive.
+lang: "pt"
+version: "latest"
 ---
 
 ### Gerencie Seus Tokens Hive

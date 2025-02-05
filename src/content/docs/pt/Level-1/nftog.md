@@ -2,6 +2,7 @@
 title: O Airdrop de NFTs OG do Skatehive Está no Ar - Um Experimento de Governança portugues
 sidebar_position: 6
 lang: "pt"
+version: "latest"
 keywords: 
 - Skatehive
 - NFTs

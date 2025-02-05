@@ -9,6 +9,8 @@ keywords:
 - bot 
 - guild.xyz 
 sidebar_position: 5  
+lang: "pt"
+version: "latest"
 ---
 
 # Tutorial do Discord: Conecte-se, Compartilhe e Crie  

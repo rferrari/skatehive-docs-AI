@@ -3,6 +3,8 @@ title: Como Sacar no PIX Usando HIVE
 sidebar_position: 5
 keywords: Sacar HIVE no PIX, Conversão HIVE para BRL, HIVE na Binance, PIX com HIVE, Hive Keychain, Como sacar Hive
 description: Aprenda como sacar seus tokens HIVE diretamente para sua conta bancária via PIX. Guia completo com instruções detalhadas para usar Binance e Hive Keychain.
+lang: "pt"
+version: "latest"
 ---
 
 ### Skatehive

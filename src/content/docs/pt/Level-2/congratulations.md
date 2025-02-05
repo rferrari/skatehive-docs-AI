@@ -3,6 +3,8 @@ title: Parabéns! Conclusão dos tutoriais do Skatehive
 sidebar_position: 4
 keywords: Skatehive, tutoriais concluídos, recompensas, publicar truques, skate, ganhar no Skatehive
 description: Parabéns por finalizar os tutoriais do Skatehive! Descubra como publicar seus truques, ganhar recompensas e participar ativamente da comunidade.
+lang: "pt"
+version: "latest"
 ---
 
 # Parabéns! 🎉

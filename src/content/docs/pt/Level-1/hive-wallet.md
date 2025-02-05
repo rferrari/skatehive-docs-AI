@@ -2,6 +2,7 @@
 title: Como Criar uma Carteira Hive 
 description: Aprenda a criar sua própria carteira Hive passo a passo usando o Hive Keychain e o Ecency.
 lang: "pt"
+version: "latest"
 keywords: 
 - criar carteira Hive
 - Hive Keychain 

@@ -2,6 +2,7 @@
 title: Como Publicar um Post no Skatehive.app portugues
 sidebar_position: 4
 lang: "pt"
+version: "latest"
 keywords: 
 - publicar
 - post 

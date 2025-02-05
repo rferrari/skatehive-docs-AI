@@ -3,6 +3,7 @@ title:  Como fazer um fork da Skatehive portugues
 description: fork skatehive
 sidebar_position: 1
 lang: "pt"
+version: "latest"
 keywords:
   - Skatehive
   - fork
