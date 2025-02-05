@@ -56,12 +56,18 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
     </a>
 
     <!-- Language switch button -->
-    <a 
-      href={langSwitchUrl}
-      class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
-    >
-      🌍 {lang === 'en' ? 'PT' : 'EN'}
-    </a>
+    <div class="relative">
+      <button id="languageButton" class="px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200 flex items-center">
+        🌍 {lang === 'en' ? 'English' : 'Português'}
+        <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      <div id="languageMenu" class="absolute hidden bg-[#3F3F5B] text-white rounded-md shadow-lg mt-2 w-32">
+        <a href={currentPath.replace('/docs/en/', '/docs/pt/')} class="block px-4 py-2 hover:bg-[#565676] transition">Português</a>
+        <a href={currentPath.replace('/docs/pt/', '/docs/en/')} class="block px-4 py-2 hover:bg-[#565676] transition">English</a>
+      </div>
+    </div>
 
     <a 
       href="/"
@@ -109,6 +115,26 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
 </main>
 
 <script>
+ document.addEventListener("DOMContentLoaded", () => {
+    const languageButton = document.getElementById("languageButton");
+    const languageMenu = document.getElementById("languageMenu");
+
+    let isMenuOpen = false;
+
+    languageButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      isMenuOpen = !isMenuOpen;
+      languageMenu.classList.toggle("hidden", !isMenuOpen);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!languageMenu.contains(event.target) && !languageButton.contains(event.target)) {
+        isMenuOpen = false;
+        languageMenu.classList.add("hidden");
+      }
+    });
+  });
+
   const openMenuButton = document.getElementById('openMenu');
   const menu = document.getElementById('sidebarMenu');
   const body = document.body;
