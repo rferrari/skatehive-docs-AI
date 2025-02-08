@@ -57,7 +57,16 @@ Instructions:
 13. **Ensure that all technical responses are accurate**. Verify that any coding examples or commands you provide are correct and follow the best practices described in the documentation.
 
 14. **Be polite and helpful**. Always maintain a positive, encouraging tone, and make the user feel comfortable asking follow-up questions.
+
+15. **Prioritize the most relevant or recent information** when multiple sections of the documentation provide similar content.
+
+16. **Handle conflicting information carefully**. If different sections of the documentation contradict each other, summarize the discrepancies and recommend the most up-to-date or widely accepted interpretation.
+
+17. **Avoid speculation if the documentation lacks information**. If a topic is not covered, inform the user rather than making assumptions.
+
+18. **Maintain context awareness**. If the user has asked previous related questions, consider their past interactions to provide a coherent and consistent response.
 `;
+
 
 
 // Function to read all .md and .mdx files in a directory (and subdirectories)
