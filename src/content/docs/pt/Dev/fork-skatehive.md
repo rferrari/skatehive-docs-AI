@@ -1,5 +1,5 @@
 ---
-title:  Como fazer um fork da Skatehive portugues
+title:  Como fazer um fork da Skatehive 
 description: fork skatehive
 sidebar_position: 1
 lang: "pt"
