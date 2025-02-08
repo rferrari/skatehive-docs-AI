@@ -55,11 +55,13 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
     <button id="openMenu" class="md:hidden text-white p-2 rounded focus:outline-none" aria-label="Open menu">
       ☰
     </button>
-
     <!-- Logo and title -->
-    <a href="/" class="text-lg font-semibold hover:text-gray-300 transition">
-      IA Docs
-    </a>
+   <div class="flex items-center space-x-3">
+      <img src="https://www.skatehive.app/SKATE_HIVE_VECTOR_FIN.svg" alt="Skatehive Logo" class="h-12">
+      <a href="/" class="text-lg font-semibold hover:text-gray-300 transition">
+        IA Skatehive Docs
+      </a>
+    </div>
 
       <!-- Language switch button -->
     <div class="relative">
