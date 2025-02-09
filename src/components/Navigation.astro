@@ -16,10 +16,6 @@ interface Props {
   version?: string;
 }
 
-interface Props {
-  version?: string;
-}
-
 const { version = 'latest' } = Astro.props;
 const docs = await getCollection('docs', ({ data }) => data.version === version && data.lang === lang);
 
@@ -29,7 +25,8 @@ const docsByFolder = sortedDocs.reduce((acc, doc) => {
   if (!doc.slug) return acc;
 
   const slugParts = doc.slug.split('/');
-  const folderPath = slugParts.length > 1 ? slugParts.slice(0, -1).join('/') : 'root';
+  const filteredParts = slugParts.filter(part => !['en', 'pt', 'lg'].includes(part)); // Remove o idioma
+  const folderPath = filteredParts.length > 1 ? filteredParts.slice(0, -1).join('/') : 'root';
 
   if (!acc[folderPath]) acc[folderPath] = [];
   acc[folderPath].push(doc);
