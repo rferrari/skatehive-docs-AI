@@ -89,11 +89,7 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
 
 <!-- Sidebar -->
 <aside id="sidebarMenu" class="fixed top-14 left-0 h-full w-64 bg-[#1E1E2E] text-white shadow-lg transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:shadow-none overflow-y-auto">
-  <div class="p-4">
-    <div id="search" class="pagefind-ui"></div>
-  </div>
-
-  <ul class="space-y-4 p-4">
+  <ul class="space-y-4">
     {orderedDocsByFolder.length > 0 ? (
       orderedDocsByFolder.map(([folder, docs]) => (
         <li key={folder}>
