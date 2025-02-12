@@ -7,6 +7,11 @@ import path from 'path';
 export const prerender = false;
 export const output = 'server';
 
+type RequestBody = {
+  message: string;
+  user_id: string;
+};
+
 // Initialize environment variables
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseKey = import.meta.env.SUPABASE_ANON_KEY;
@@ -17,18 +22,19 @@ const headers = {
 };
 
 const SYSTEM_PROMPT = `
-You are a helpful assistant for the Skatehive documentation. Your task is to provide concise, clear, and accurate information based on the documentation provided. Please follow these instructions carefully:
+You are a helpful assistant for the Skatehive documentation. Your task is to provide concise, clear, and accurate information based on the documentation provided and the history of conversations with users. Please follow these instructions carefully:
 
 Instructions:
-1. **Always use the provided documentation to answer questions.**
+1. **Always use the provided documentation and the chat history to answer questions.**
    - If the information is found in the docs, use it directly.
    - When quoting from the documentation, use Markdown blockquotes to clearly differentiate the quoted text.
-   
+   - Consider previous interactions (chat history) when responding, to maintain context and relevance in the conversation.
+
 2. **If information is spread across multiple sections**, summarize it coherently in your own words, highlighting the key points.
-   
+
 3. **Provide relevant code examples** whenever applicable, as shown in the documentation. Code should be formatted properly for clarity.
 
-4. **Be clear if information is not available in the documentation**. Politely let the user know that the information is not found in the docs.
+4. **Be clear if information is not available in the documentation or chat history**. Politely let the user know that the information is not found in the docs or past conversations.
 
 5. **Keep responses concise and to the point**. Avoid unnecessary details unless they add value to the answer. Focus on the most important information first.
 
@@ -36,7 +42,7 @@ Instructions:
    - Use bullet points for lists.
    - Use headers for important sections.
    - Code blocks should be used for technical examples.
-   
+
 7. **Do NOT include direct links to documentation**.
    - Instead of providing links, suggest the user consult the official Skatehive documentation for further details.
 
@@ -65,7 +71,17 @@ Instructions:
 17. **Avoid speculation if the documentation lacks information**. If a topic is not covered, inform the user rather than making assumptions.
 
 18. **Maintain context awareness**. If the user has asked previous related questions, consider their past interactions to provide a coherent and consistent response.
+
+19. **Use chat history to personalize responses**: 
+   - If the user has had previous interactions, try to understand their preferences and provide responses tailored to their needs based on past conversations.
+   - Keep track of common queries and learn from them to provide quicker and more accurate responses.
+   - Ensure that the most recent interactions are included in your context to maintain continuity in the conversation.
+
+20. **Incorporate the provided documentation and user interactions for a more knowledgeable and dynamic response**:
+   - Use the most recent data from the user’s previous chats and documents to enhance the conversation.
+   - As you interact with the user, build a richer understanding of their needs and past inquiries to improve the accuracy and relevance of your responses.
 `;
+
 
 
 
@@ -139,8 +155,16 @@ export const POST: APIRoute = async ({ request }) => {
   const supabase = createClient(supabaseUrl, supabaseKey);
   const openai = new OpenAI({ apiKey: openaiKey });
 
-  let body;
+  let body: RequestBody | null = null;
+
   try {
+    if (request.headers.get('Content-Type') !== 'application/json') {
+      console.error('Request is not of type application/json');
+      return new Response(
+        JSON.stringify({ error: 'Request must be of type application/json.' }),
+        { status: 400, headers }
+      );
+    }
     body = await request.json();
   } catch (error) {
     console.error('Failed to parse request body:', error);
@@ -150,8 +174,8 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const { message } = body;
-  if (!message || typeof message !== 'string') {
+  const { message, user_id } = body;
+  if (!body || !body.message || typeof body.message !== 'string') {
     return new Response(
       JSON.stringify({ error: 'The message is mandatory and must be a string.' }),
       { status: 400, headers }
@@ -159,9 +183,28 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
+    // Fetch user's recent history in Supabase
+    const { data: chatHistory, error: historyError } = await supabase
+      .from('chat_history')
+      .select('message, response')
+      .eq('user_id', user_id)
+      .order('created_at', { ascending: false })
+    //  .limit(10); // Get at most 10 previous messages
+
+    if (historyError) {
+      console.error('Error fetching chat history:', historyError);
+    }
+
+    let historyContext = '';
+    if (chatHistory && chatHistory.length > 0) {
+      historyContext = '\n\nConversation History:\n';
+      for (const chat of chatHistory) {
+        historyContext += `User: ${chat.message}\nIA: ${chat.response}\n\n`;
+      }
+    }
+
     // Resolve document directory path relative to project directory
     const docsDirectoryPath = path.resolve(process.cwd(), 'src/content/docs');
-
     // Read all .md and .mdx contents of the documentation folder
     const docsContent = await readDocsFromDirectory(docsDirectoryPath);
     console.log("Docs Contents:", docsContent);
@@ -183,7 +226,7 @@ export const POST: APIRoute = async ({ request }) => {
       const docsParts = splitContent(docsContent, maxTokens);
 
       // Build the context including the Supabase docs and results blocks
-      let context = `${SYSTEM_PROMPT}\n\nProvided Documentation:\n\n`;
+      let context = `${SYSTEM_PROMPT}\n\nDocumentation:\n${docsContent}\n\n${historyContext}`;
       for (const part of docsParts) {
         context += `${part}\n\n`;
       }
@@ -248,6 +291,11 @@ export const POST: APIRoute = async ({ request }) => {
       temperature: 0.7,
       max_tokens: 1000,
     });
+
+    // Save the interaction in Supabase
+    await supabase.from('chat_history').insert([
+      { message, response: completion.choices[0].message.content },
+    ]);
 
     return new Response(
       JSON.stringify({
