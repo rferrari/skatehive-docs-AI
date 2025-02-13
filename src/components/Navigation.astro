@@ -99,7 +99,9 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
               <li key={doc.slug}>
                 <a 
                   href={`/docs/${doc.slug}`}
-                  class="block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200"
+                  class={`block px-4 py-2 text-gray-300 hover:bg-[#3F3F5B] hover:text-white rounded-md transition duration-200 ${
+                    currentPath.includes(doc.slug) ? 'bg-[#565676]' : ''
+                  }`}
                 >
                   {doc.data.title}
                 </a>
@@ -172,6 +174,28 @@ const orderedDocsByFolder = Object.entries(docsByFolder).sort(([a], [b]) => {
   #sidebarMenu {
     background-color: #1E1E2E;
     color: #FFFFFF;
+  }
+
+   /* Mobile Styles */
+  @media (max-width: 768px) {
+    #sidebarMenu {
+    width: 250px; 
+      z-index: 20;
+      position: fixed; 
+      top: 56px;  
+      left: 0;
+      height: calc(100vh - 56px); /* A altura da sidebar ocupa o restante da tela, descontando a altura da navbar */
+      overflow-y: auto; 
+    }
+
+    #sidebarMenu.-translate-x-full {
+      transform: translateX(-100%);
+    }
+
+    /* Menu abrir/fechar */
+    #openMenu {
+      display: block;
+    }
   }
 
   li a {
