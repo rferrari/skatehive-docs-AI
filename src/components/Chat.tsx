@@ -85,22 +85,23 @@ export function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-[85vh] max-h-[85vh] bg-gray-900 text-gray-100 rounded-lg shadow-lg p-4 mx-auto w-full max-w-4xl">
-      <div className="flex flex-col justify-start items-center overflow-y-auto p-4 space-y-4 h-full w-full">
+    <div className="flex flex-col h-[70vh] max-w-3xl bg-gray-900 text-gray-100 rounded-lg shadow-lg mx-auto">
+      {/* Scrollable Message Container */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-800 rounded-md">
         {messages.map((message, i) => (
-          <div 
-            key={i} 
-            className={`p-4 rounded-xl shadow-md transition-transform duration-500 ease-in-out 
+          <div
+            key={i}
+            className={`p-3 rounded-lg shadow-md transition-transform duration-500 ease-in-out 
               ${message.role === 'user' ? 'bg-blue-600 text-white self-end' :
                 message.role === 'error' ? 'bg-red-700 text-white self-center' :
                   'bg-gray-700 text-gray-200 self-start'} 
-              text-base md:text-lg break-words w-full sm:max-w-[75%] lg:max-w-[100%] animate__animated animate__fadeIn`}
+              text-base md:text-lg break-words w-full sm:max-w-[75%] lg:max-w-[90%] animate__animated animate__fadeIn`}
           >
             <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
         ))}
         {loading && (
-          <div className="bg-gray-700 p-4 rounded-xl self-start w-full sm:max-w-[75%] lg:max-w-[100%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
+          <div className="bg-gray-700 p-3 rounded-lg self-start w-full sm:max-w-[75%] lg:max-w-[90%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
             <div>Thinking...</div>
           </div>
         )}
