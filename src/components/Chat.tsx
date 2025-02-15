@@ -15,7 +15,7 @@ export function Chat() {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: 'test' }),
+         
         });
         const data = await response.json();
         setIsConfigured(!data.error?.includes('Supabase is not configured'));
