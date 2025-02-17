@@ -70,40 +70,35 @@ Instructions:
 
 17. **Avoid speculation if the documentation lacks information**. If a topic is not covered, inform the user rather than making assumptions.
 
-18. **Maintain context awareness**. If the user has asked previous related questions, consider their past interactions to provide a coherent and consistent response.
-
-19. **Use chat history to personalize responses**: 
-   - If the user has had previous interactions, try to understand their preferences and provide responses tailored to their needs based on past conversations.
+18. **Maintain context awareness**. If the user has asked previous related questions, try to understand their preferences and provide responses tailored to their needs based on past conversations.
    - Keep track of common queries and learn from them to provide quicker and more accurate responses.
    - Ensure that the most recent interactions are included in your context to maintain continuity in the conversation.
 
-20. **Incorporate the provided documentation and user interactions for a more knowledgeable and dynamic response**:
-   - Use the most recent data from the user’s previous chats and documents to enhance the conversation.
+19. **Use chat history to personalize responses**: 
+   - If the user has had previous interactions, try to understand their preferences and provide responses tailored to their needs based on past conversations.
    - As you interact with the user, build a richer understanding of their needs and past inquiries to improve the accuracy and relevance of your responses.
 `;
 
-
-
-
 // Function to read all .md and .mdx files in a directory (and subdirectories)
-async function readDocsFromDirectory(directoryPath: string): Promise<string> {
-  let content = '';
+async function readDocsFromDirectory(directoryPath: string): Promise<{ content: string; url: string }[]> {
+  const files: { content: string; url: string }[] = [];
   try {
-    const files = await fs.readdir(directoryPath, { withFileTypes: true });
-    for (const file of files) {
-      const fullPath = path.join(directoryPath, file.name);
-      if (file.isDirectory()) {
-        content += await readDocsFromDirectory(fullPath);
-      } else if (file.isFile() && (file.name.endsWith('.md') || file.name.endsWith('.mdx'))) {
+    const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(directoryPath, entry.name);
+      if (entry.isDirectory()) {
+        files.push(...(await readDocsFromDirectory(fullPath)));
+      } else if (entry.isFile() && (entry.name.endsWith('.md') || entry.name.endsWith('.mdx'))) {
         const fileContent = await fs.readFile(fullPath, 'utf-8');
-        console.log(`File content ${file.name}:`, fileContent);
-        content += fileContent + '\n\n';
+        const relativePath = path.relative(path.resolve(process.cwd(), 'src/content/docs'), fullPath);
+        const url = `https://docs-ai-wheat.vercel.app/docs/${relativePath.replace(/\\/g, '/')}`;
+        files.push({ content: fileContent, url });
       }
     }
   } catch (error) {
     console.error(`Error reading directory ${directoryPath}:`, error);
   }
-  return content;
+  return files;
 }
 
 // Function to divide the content into smaller parts, so as not to exceed the token limit
@@ -131,6 +126,108 @@ function splitContent(content: string, maxTokens: number): string[] {
   return parts;
 }
 
+async function createEmbeddings(openai: OpenAI, texts: string[]): Promise<number[][]> {
+  const embeddingResponses = await Promise.all(
+    texts.map(async (text) => {
+      const response = await openai.embeddings.create({
+        model: 'text-embedding-ada-002',
+        input: text,
+      });
+      return response.data[0].embedding;
+    })
+  );
+  return embeddingResponses;
+}
+
+async function storeVectors(supabase: any, vectors: number[][], contents: string[], urls: string[]) {
+  const data = vectors.map((vector, index) => ({
+    content: contents[index],
+    url: urls[index],
+    embedding: vector,
+  }));
+
+  // Filter out any documents that do not have a URL
+  const filteredData = data.filter(doc => doc.url);
+
+  const { data: insertData, error } = await supabase.from('documents').insert(filteredData);
+  if (error) {
+    console.error('Error storing vectors:', error);
+  }
+  return insertData;
+}
+
+async function fetchChatHistory(supabase: any, user_id: string) {
+  const { data: chatHistory, error } = await supabase
+    .from('chat_history')
+    .select('message, response')
+    .eq('user_id', user_id)
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching chat history:', error);
+  }
+
+  return chatHistory || [];
+}
+
+function createPrompt(systemPrompt: string, chatHistory: { message: string; response: string }[], userMessage: string, matchedDocs: { content: string; url: string }[]): string {
+  let historyContext = '';
+  if (chatHistory && chatHistory.length > 0) {
+    historyContext = '\n\nConversation History:\n';
+    for (const chat of chatHistory) {
+      historyContext += `User: ${chat.message}\nIA: ${chat.response}\n\n`;
+    }
+  }
+
+  let documentationContext = '';
+  if (matchedDocs && matchedDocs.length > 0) {
+    documentationContext = '\n\nDocumentation:\n';
+    for (const doc of matchedDocs) {
+      documentationContext += `${doc.content}\n\n`;
+    }
+  }
+
+  return `${systemPrompt}\n\n${historyContext}\n${documentationContext}\nUser: ${userMessage}`;
+}
+
+async function generateResponse(openai: OpenAI, prompt: string) {
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: 'system', content: prompt },
+    ],
+    temperature: 0.1,
+    max_tokens: 500,
+  });
+
+  return completion.choices[0].message.content;
+}
+
+async function saveInteraction(supabase: any, user_id: string, message: string, response: string) {
+  const { data, error } = await supabase.from('chat_history').insert([
+    { message, response, user_id },
+  ]);
+
+  if (error) {
+    console.error('Error saving interaction:', error);
+  }
+
+  return data;
+}
+
+async function initializeDocumentation(supabase: any, openai: OpenAI) {
+  const docs = await readDocsFromDirectory(path.resolve(process.cwd(), 'src/content/docs'));
+  const contents = docs.map(doc => doc.content);
+  const urls = docs.map(doc => doc.url);
+
+  const maxTokens = 500;
+  const parts = contents.flatMap(content => splitContent(content, maxTokens));
+
+  const embeddings = await createEmbeddings(openai, parts);
+  await storeVectors(supabase, embeddings, parts, urls);
+}
+
 export const POST: APIRoute = async ({ request }) => {
   if (!supabaseUrl || !supabaseKey) {
     console.error('Supabase configuration is missing.');
@@ -145,15 +242,16 @@ export const POST: APIRoute = async ({ request }) => {
   if (!openaiKey) {
     console.error('OpenAI API key is missing.');
     return new Response(
-      JSON.stringify({
-        error: 'OpenAI API key is not configured. Please provide OPENAI_API_KEY.',
-      }),
+      JSON.stringify({ error: 'OpenAI API key is not configured. Please provide OPENAI_API_KEY.' }),
       { status: 503, headers }
     );
   }
 
   const supabase = createClient(supabaseUrl, supabaseKey);
   const openai = new OpenAI({ apiKey: openaiKey });
+
+  // Initialize documentation on server start
+  await initializeDocumentation(supabase, openai);
 
   let body: RequestBody | null = null;
 
@@ -165,7 +263,17 @@ export const POST: APIRoute = async ({ request }) => {
         { status: 400, headers }
       );
     }
-    body = await request.json();
+
+    const text = await request.text();
+    if (!text) {
+      console.error('Request body is empty');
+      return new Response(
+        JSON.stringify({ error: 'Request body is empty.' }),
+        { status: 400, headers }
+      );
+    }
+
+    body = JSON.parse(text);
   } catch (error) {
     console.error('Failed to parse request body:', error);
     return new Response(
@@ -184,30 +292,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     // Fetch user's recent history in Supabase
-    const { data: chatHistory, error: historyError } = await supabase
-      .from('chat_history')
-      .select('message, response')
-      .eq('user_id', user_id)
-      .order('created_at', { ascending: false })
-    //  .limit(10); // Get at most 10 previous messages
-
-    if (historyError) {
-      console.error('Error fetching chat history:', historyError);
-    }
-
-    let historyContext = '';
-    if (chatHistory && chatHistory.length > 0) {
-      historyContext = '\n\nConversation History:\n';
-      for (const chat of chatHistory) {
-        historyContext += `User: ${chat.message}\nIA: ${chat.response}\n\n`;
-      }
-    }
-
-    // Resolve document directory path relative to project directory
-    const docsDirectoryPath = path.resolve(process.cwd(), 'src/content/docs');
-    // Read all .md and .mdx contents of the documentation folder
-    const docsContent = await readDocsFromDirectory(docsDirectoryPath);
-    console.log("Docs Contents:", docsContent);
+    const chatHistory = await fetchChatHistory(supabase, user_id);
 
     // Step 1: Search for keywords in Supabase
     const { data: keywordResults, error: keywordError } = await supabase
@@ -218,89 +303,54 @@ export const POST: APIRoute = async ({ request }) => {
         config: 'english',
       });
 
+    let matchedDocs: { content: string; url: string }[] = [];
+
     if (keywordError) {
       console.error('Keyword search error:', keywordError);
-    } else if (keywordResults?.length > 0) {
-      // Split the docs content into smaller parts for sending
-      const maxTokens = 3000;
-      const docsParts = splitContent(docsContent, maxTokens);
-
-      // Build the context including the Supabase docs and results blocks
-      let context = `${SYSTEM_PROMPT}\n\nDocumentation:\n${docsContent}\n\n${historyContext}`;
-      for (const part of docsParts) {
-        context += `${part}\n\n`;
-      }
-      context += `\nSource URLs:\n${keywordResults
-        .map((doc) => `- ${doc.url}`)
-        .join('\n')}`;
-
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: context },
-          { role: 'user', content: message },
-        ],
-        temperature: 0.7,
-        max_tokens: 1000,
+      // Fallback to vector search if keyword search fails
+      const embeddingResponse = await openai.embeddings.create({
+        model: 'text-embedding-ada-002',
+        input: message,
       });
+      const embedding = embeddingResponse.data[0].embedding;
 
-      return new Response(
-        JSON.stringify({
-          response: completion.choices[0].message.content,
-          sources: keywordResults.map((doc) => doc.url),
-        }),
-        { headers }
+      // Perform vector search
+      const { data: vectorResults, error: vectorError } = await supabase.rpc(
+        'match_documents_vector',
+        {
+          query_embedding: embedding,
+          match_threshold: 0.5,
+          match_count: 5,
+        }
       );
-    }
 
-    // If there are no search results in Supabase, generate embedding and perform vector search
-    const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-ada-002',
-      input: message,
-    });
-    const embedding = embeddingResponse.data[0].embedding;
-
-    // Perform vector search
-    const { data: vectorResults, error: vectorError } = await supabase.rpc(
-      'match_documents_vector',
-      {
-        query_embedding: embedding,
-        match_threshold: 0.5,
-        match_count: 5,
+      if (vectorError) {
+        console.error('Vector search error:', vectorError);
+        throw vectorError;
       }
-    );
 
-    if (vectorError) {
-      console.error('Vector search error:', vectorError);
-      throw vectorError;
+      matchedDocs = vectorResults || [];
+    } else {
+      console.log("Keyword Search Results:", keywordResults);
+
+      // Filter the docs to only include those that match the keywords
+      matchedDocs = keywordResults || [];
     }
 
-    const documents = vectorResults || [];
-    let context = `${SYSTEM_PROMPT}\n\nProvided Documentation:\n\n`;
-
-    for (const doc of documents) {
-      context += `${doc.content}\n\n`;
+    if (matchedDocs.length === 0) {
+      console.warn('No documents matched the search criteria.');
     }
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: context },
-        { role: 'user', content: message },
-      ],
-      temperature: 0.7,
-      max_tokens: 1000,
-    });
+    const prompt = createPrompt(SYSTEM_PROMPT, chatHistory, message, matchedDocs);
+    const response = await generateResponse(openai, prompt);
 
     // Save the interaction in Supabase
-    await supabase.from('chat_history').insert([
-      { message, response: completion.choices[0].message.content },
-    ]);
+    await saveInteraction(supabase, user_id, message, response);
 
     return new Response(
       JSON.stringify({
-        response: completion.choices[0].message.content,
-        sources: documents.map((doc: any) => doc.url),
+        response: response,
+        sources: matchedDocs.map(doc => doc.url),
       }),
       { headers }
     );
