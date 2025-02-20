@@ -1,5 +1,5 @@
 import 'animate.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 export function Chat() {
@@ -8,6 +8,7 @@ export function Chat() {
   const [loading, setLoading] = useState(false);
   const [isConfigured, setIsConfigured] = useState<boolean | null>(null);
   const [userId] = useState(() => `user_${Math.random().toString(36).slice(2)}`); // Unique ID per session
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     async function checkConfiguration() {
@@ -15,7 +16,7 @@ export function Chat() {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             messages,
             user_id: userId
           })
@@ -38,23 +39,23 @@ export function Chat() {
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
-  
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           message: userMessage,
-          user_id: userId 
+          user_id: userId
         }),
       });
-  
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || `Error: ${response.status}`);
       }
-  
+
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: formatMessage(data.response)
@@ -101,42 +102,71 @@ export function Chat() {
 
   return (
     <div className="flex flex-col h-[70vh] max-w-3xl bg-gray-900 text-gray-100 rounded-lg shadow-lg mx-auto">
-      {/* Scrollable Message Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-800 rounded-md">
+      <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-4 md:space-y-6 
+                    bg-gradient-to-b from-gray-800/50 to-gray-900/50">
         {messages.map((message, i) => (
           <div
             key={i}
-            className={`p-3 rounded-lg shadow-md transition-transform duration-500 ease-in-out 
-              ${message.role === 'user' ? 'bg-blue-600 text-white self-end' :
-                message.role === 'error' ? 'bg-red-700 text-white self-center' :
-                  'bg-gray-700 text-gray-200 self-start'} 
-              text-base md:text-lg break-words w-full sm:max-w-[75%] lg:max-w-[90%] animate__animated animate__fadeIn`}
+            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <ReactMarkdown>{message.content}</ReactMarkdown>
+            <div
+              className={`p-3 md:p-4 rounded-2xl shadow-xl backdrop-blur-sm 
+                        w-[85%] sm:w-[75%] md:max-w-[70%]
+                        ${message.role === 'user'
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white'
+                  : message.role === 'error'
+                    ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                    : 'bg-gradient-to-r from-gray-700 to-gray-800 text-gray-200'
+                } 
+                        animate__animated animate__fadeIn animate__faster`}
+            >
+              <ReactMarkdown className="prose prose-invert prose-sm md:prose-base break-words">
+                {message.content}
+              </ReactMarkdown>
+            </div>
           </div>
         ))}
         {loading && (
-          <div className="bg-gray-700 p-3 rounded-lg self-start w-full sm:max-w-[75%] lg:max-w-[90%] animate-pulse text-base md:text-lg animate__animated animate__fadeIn">
-            <div>Thinking...</div>
+          <div className="flex justify-start">
+            <div className="bg-gradient-to-r from-gray-700 to-gray-800 p-3 md:p-4 
+                          rounded-2xl animate-pulse w-[85%] sm:w-[75%] md:max-w-[70%]">
+              <div className="flex space-x-2">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: '0.4s' }}></div>
+              </div>
+            </div>
           </div>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <form onSubmit={handleSubmit}
+        className="p-3 md:p-4 bg-gray-800/90 rounded-b-lg border-t border-gray-700">
+        <div className="flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question..."
-            className="flex-1 px-4 py-3 border rounded-lg bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-lg w-full"
+            placeholder="Digite sua mensagem..."
+            className="flex-1 px-4 py-3 rounded-lg bg-gray-700/50 text-gray-100 
+                     placeholder-gray-400 focus:outline-none focus:ring-2 
+                     focus:ring-blue-500 border border-gray-600 text-sm md:text-base
+                     transition-all duration-300"
           />
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-6 py-3 rounded-lg bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-lg transition font-semibold"
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 
+                     to-blue-700 hover:from-blue-500 hover:to-blue-600 
+                     disabled:opacity-50 text-white font-medium text-sm md:text-base
+                     transition duration-300 ease-in-out transform hover:scale-105
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg
+                     w-full sm:w-auto"
           >
-            Send
+            Enviar
           </button>
         </div>
       </form>
