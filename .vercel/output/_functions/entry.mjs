@@ -1,0 +1,33 @@
+import { renderers } from './renderers.mjs';
+import { c as createExports } from './chunks/entrypoint_sWuLKlJz.mjs';
+import { manifest } from './manifest_5fpBXL4F.mjs';
+
+const serverIslandMap = new Map();;
+
+const _page0 = () => import('./pages/_image.astro.mjs');
+const _page1 = () => import('./pages/api/chat.astro.mjs');
+const _page2 = () => import('./pages/docs/_version_.astro.mjs');
+const _page3 = () => import('./pages/docs/_version_/_---slug_.astro.mjs');
+const _page4 = () => import('./pages/index.astro.mjs');
+const pageMap = new Map([
+    ["node_modules/astro/dist/assets/endpoint/generic.js", _page0],
+    ["src/pages/api/chat.ts", _page1],
+    ["src/pages/docs/[version]/index.astro", _page2],
+    ["src/pages/docs/[version]/[...slug].astro", _page3],
+    ["src/pages/index.astro", _page4]
+]);
+
+const _manifest = Object.assign(manifest, {
+    pageMap,
+    serverIslandMap,
+    renderers,
+    middleware: () => import('./_noop-middleware.mjs')
+});
+const _args = {
+    "middlewareSecret": "f7e2f53f-d29b-4881-9236-81c2d02df009",
+    "skewProtection": false
+};
+const _exports = createExports(_manifest, _args);
+const __astrojsSsrVirtualEntry = _exports.default;
+
+export { __astrojsSsrVirtualEntry as default, pageMap };

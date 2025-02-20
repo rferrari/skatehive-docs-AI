@@ -14,10 +14,11 @@
     "rootDir": "./src",
     "verbatimModuleSyntax": false,
     "isolatedModules": true,
+    "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
-  "extends": "astro/tsconfigs/base"
+  
 }
