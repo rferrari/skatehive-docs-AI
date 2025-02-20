@@ -5,18 +5,7 @@ id: "discord"
 sidebar_position: 5  
 keywords:
   - Discord
-  - community building
-  - coordination
-  - roles
-  - bots
-  - rooms
-  - Skatehive
-  - governance
-  - proposals
-  - Web3
-  - NFT
-  - Hive
-  - crypto
+  - community
   - tutorials
 version: "latest"
 lang: "en"

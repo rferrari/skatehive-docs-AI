@@ -7,13 +7,6 @@ lang: "en"
 id: "congratulations"
 keywords:
   - congratulations
-  - Skatehive
-  - tutorials
-  - rewards
-  - post tricks
-  - community
-  - engagement
-  - skateboarding
 ---
 
 # Congratulations! 🎉

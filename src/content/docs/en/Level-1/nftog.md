@@ -7,20 +7,8 @@ lang: "en"
 id: "nftlog"
 keywords:
   - NFTs
-  - airdrop
   - governance
-  - Skatehive
-  - Ethereum
-  - decentralized
-  - voting
-  - community
   - token
-  - skateboarding
-  - cryptocurrency
-  - snapshot
-  - governance token
-  - experiment
-  - blockchain
   - NFT collection
 ---
 

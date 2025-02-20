@@ -6,16 +6,11 @@ version: "latest"
 lang: "en"
 id: "manager-hive"
 keywords:
-  - Hive
   - Hive Power
   - Hive Dollars
   - HBD
   - cryptocurrency
-  - blockchain
   - savings
-  - staking
-  - influence
-  - rewards
 ---
 
 ### Manage Your Hive Tokens

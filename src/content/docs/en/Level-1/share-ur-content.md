@@ -6,16 +6,8 @@ version: "latest"
 lang: "en"
 id: "share-ur-content"
 keywords:
-  - Skatehive
   - publish
   - post
-  - content
-  - media
-  - community
-  - guide
-  - images
-  - videos
-  - social media
   - share
   - tutorial
 ---

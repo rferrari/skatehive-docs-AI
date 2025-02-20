@@ -3,14 +3,12 @@ title: Hive Witness
 description: This tutorial guides you through the process of voting for the Skatehive witness on the Hive Blockchain, supporting skateboarding culture and decentralization.
 id: vote-for-skatehive-witness
 keywords: 
-- Skatehive
 - Hive Blockchain
 - vote
 - witness
 - decentralization
-- blockchain
 - voting 
-- skateboarding
+
 version: "latest"
 lang: "en"
 sidebar_position: 7

@@ -9,13 +9,6 @@ keywords:
   - Zerion
   - Ethereum
   - wallet
-  - multi-chain
-  - tutorial
-  - Skatehive
-  - rewards
-  - extension
-  - cryptocurrency
-  - dApps
 ---
 
 # Ethereum Wallet (Zerion)

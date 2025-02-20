@@ -6,13 +6,9 @@ version: "latest"
 lang: "en"
 id: "login skatehive"
 keywords:
-  - Skatehive
-  - Hive Keychain
   - login
   - Hive account
   - authentication
-  - blockchain
-  - cryptocurrency
   - tutorial
 ---
 

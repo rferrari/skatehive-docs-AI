@@ -5,10 +5,6 @@ description: Learn how to get eligible for Skatehive’s airdrop by connecting y
 id: "airdrop"
 keywords: 
 - airdrop, 
-- Skatehive, 
-- Hive, 
-- Ethereum, 
-- wallet,
 - tutorial
 version: "latest"
 lang: "en"

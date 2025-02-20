@@ -4,10 +4,8 @@ title: How to Generate Passive Income on SkateHive
 description: Learn how to earn passive income on SkateHive using Hive Power, curation, delegation, and HBD staking. Discover tips to maximize your earnings.
 keywords:
   - passive income
-  - SkateHive
   - Hive Power
   - HBD staking
-  - curation
   - delegation
 version: "latest"
 lang: "en"

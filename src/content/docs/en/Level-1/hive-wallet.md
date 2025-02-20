@@ -8,12 +8,6 @@ id: "hive-wallet"
 keywords:
   - Hive Wallet
   - Hive Keychain
-  - Ecency
-  - cryptocurrency
-  - blockchain
-  - wallet setup
-  - backup
-  - secure credentials
   - Hive account
 ---
 

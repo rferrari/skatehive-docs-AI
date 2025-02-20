@@ -6,15 +6,6 @@ id: "discord-share-screen"
 keywords:
   - Discord
   - screen sharing
-  - gaming
-  - presentations
-  - group calls
-  - mobile
-  - PC
-  - how-to guide
-  - tutorials
-  - Skatehive
-
 ---
 
 

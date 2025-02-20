@@ -6,17 +6,9 @@ sidebar_position: 1
 version: "latest"
 lang: "en"
 keywords:
-  - Skatehive
   - fork
-  - guide
   - development
   - GitHub
-  - repository
-  - NodeJs
-  - pnpm
-  - deployment
-  - Vercel
-  - tutorial
   - open-source
 ---
 # How to Fork Skatehive 🛹
