@@ -1,5 +1,5 @@
 ---
-title: Skatehive OG NFTs Airdrop is live - A Governance Experiment
+title: Skatehive OG NFTs Airdrop is live 
 lang: "lg"
 sidebar_position: 6
 description: Weegatte ku Skatehive OG NFT airdrop era weetaba mu kugezesa okufuga okusaasaanyizibwa. Yiga engeri y'okusaba, okugula, n'okulonda ne SKTHV OG NFT yo.

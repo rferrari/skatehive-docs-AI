@@ -1,5 +1,5 @@
 ---
-title: Como Fazer Login no Skatehive.app  
+title:  Fazer Login no Skatehive.app  
 description: Aprenda como fazer login no Skatehive usando o Hive Keychain, um processo simples e rápido. 
 lang: "pt"
 version: "latest"

@@ -1,5 +1,5 @@
 ---
-title: Skatehive OG NFTs Airdrop is live - A Governance Experiment
+title: Skatehive OG NFTs Airdrop 
 sidebar_position: 6
 description: Join the Skatehive OG NFT airdrop and participate in a decentralized governance experiment. Learn how to claim, buy, and vote with your SKTHV OG NFT.
 version: "latest"
