@@ -4,10 +4,6 @@ description: "Aprenda a usar o Discord para conectar comunidades, compartilhar c
 keywords: 
 - discord
 - tutorial
-- skatehive
-- comunidade
-- bot 
-- guild.xyz 
 sidebar_position: 5  
 lang: "pt"
 version: "latest"

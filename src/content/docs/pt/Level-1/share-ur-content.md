@@ -6,12 +6,10 @@ version: "latest"
 keywords: 
 - publicar
 - post 
-- Skatehive
 - conteúdo
 - tutorial
 - criar
-- interagir
-- comunidade
+
 description: Aprenda como criar e publicar um post no Skatehive.app com este passo a passo simples. Compartilhe suas fotos e vídeos com a comunidade!
 ---
 

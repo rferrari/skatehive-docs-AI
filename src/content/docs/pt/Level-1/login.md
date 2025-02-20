@@ -5,12 +5,10 @@ lang: "pt"
 version: "latest"
 keywords: 
 - login Skatehive
-- Hive Keychain
-- Skatehive app
+
+
 - como fazer login
-- blockchain
-- account
-- hive 
+
 sidebar_position: 1  
 ---
 

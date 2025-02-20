@@ -4,13 +4,9 @@ sidebar_position: 6
 lang: "pt"
 version: "latest"
 keywords: 
-- Skatehive
 - NFTs
 - OG
-- airdrop
 - governança descentralizada
-- comunidade
-- Ethereum
 description: O Skatehive lança seus NFTs OG para promover a governança descentralizada na comunidade. Saiba mais sobre o airdrop e como participar.
 ---
 

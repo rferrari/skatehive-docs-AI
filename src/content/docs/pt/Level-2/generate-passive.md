@@ -4,10 +4,7 @@ title: Como Gerar Renda Passiva no SkateHive
 description: Aprenda a ganhar renda passiva no SkateHive usando Hive Power, curadoria, delegação e staking de HBD. Descubra dicas para maximizar seus ganhos.
 keywords:
   - renda passiva
-  - SkateHive
-  - Hive Power
   - staking de HBD
-  - curadoria
   - delegação
 version: "latest"
 lang: "pt"

@@ -7,6 +7,7 @@ lang: "en"
 id: "login skatehive"
 keywords:
   - login
+  - how to login to skatehive
   - Hive account
   - authentication
   - tutorial

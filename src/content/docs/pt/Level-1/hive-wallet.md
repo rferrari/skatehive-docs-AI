@@ -5,12 +5,7 @@ lang: "pt"
 version: "latest"
 keywords: 
 - criar carteira Hive
-- Hive Keychain 
-- Ecency
 - wallet
-- cryptocurrency
-- blockchain
-- Hive
 sidebar_position: 2  
 ---
 

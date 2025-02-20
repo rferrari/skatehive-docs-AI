@@ -9,6 +9,7 @@ keywords:
   - Hive Wallet
   - Hive Keychain
   - Hive account
+  - create hive wallet 
 ---
 
 ### How to Create a Hive Wallet

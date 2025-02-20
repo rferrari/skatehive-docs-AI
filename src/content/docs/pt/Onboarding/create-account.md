@@ -4,12 +4,9 @@ id: criar uma conta
 description: Aprenda como criar uma conta no Skatehive, indicar um amigo e configurar o Hive Keychain para login seguro.
 sidebar-position: 1
 keywords:
-- Skatehive
-- Criar conta
-- Hive Keychain
-- Indicar para um amigo
-- Hive wallet
-- Login seguro
+- criar uma conta
+- criar conta 
+- criar conta skatehive
 version: "latest"
 lang: "pt"
 ---

@@ -6,9 +6,6 @@ version: "latest"
 keywords: 
 - compartilhar tela 
 - discord
-- servidor
-- skatehive 
-- tutorial
 ---
 # Como Compartilhar Sua Tela no Discord
 

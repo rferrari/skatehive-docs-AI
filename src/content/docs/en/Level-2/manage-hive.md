@@ -9,8 +9,8 @@ keywords:
   - Hive Power
   - Hive Dollars
   - HBD
-  - cryptocurrency
-  - savings
+  - criptomoeda
+  - poupança
 ---
 
 ### Manage Your Hive Tokens

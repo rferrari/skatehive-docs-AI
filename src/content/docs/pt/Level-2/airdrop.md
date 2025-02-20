@@ -1,7 +1,10 @@
 ---
 title: Como se qualificar para o airdrop
 sidebar_position: 2
-keywords: airdrop, Skatehive, tutorial, carteira Ethereum, Hive, criar airdrop, Pepe God, confetes
+keywords: 
+- airdrop, 
+- tutorial
+- qualificar airdrop
 description: Aprenda a se qualificar para o airdrop e como criar seu próprio airdrop no Skatehive.app com este guia prático e detalhado.
 lang: "pt"
 version: "latest"

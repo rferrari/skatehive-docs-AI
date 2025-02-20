@@ -1,7 +1,10 @@
 ---
 title: Como Configurar a Carteira Ethereum Zerion
 sidebar_position: 1
-keywords: Carteira Zerion, Ethereum, como configurar, guia de instalação, Skatehive, carteira blockchain, Zerion tutorial
+keywords:
+  - Zerion
+  - Ethereum
+  - wallet
 description: Um guia completo para configurar sua Carteira Zerion e conectá-la ao Skatehive. Aprenda a gerenciar ativos Ethereum de forma simples e segura.
 lang: "pt"
 version: "latest"

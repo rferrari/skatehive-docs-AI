@@ -3,15 +3,10 @@ title: Trilha de Curadoria
 description: Aprenda a entrar para a Trilha de Curadoria do Skatehive na Blockchain Hive para apoiar conteúdos e criadores de skate enquanto ganha recompensas de curadoria.
 id: join-skatehive-curation-trail
 keywords: 
-- Skatehive, 
 - Trilha de Curadoria, 
-- Blockchain Hive, 
 - votação, 
 - upvote, 
 - descentralização, 
-- skateboarding, 
-- Hive.vote, 
-- comunidade,
 - recompensas de curadoria
 version: "latest"
 lang: "pt"
