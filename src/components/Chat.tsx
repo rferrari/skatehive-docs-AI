@@ -7,24 +7,28 @@ export function Chat() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [isConfigured, setIsConfigured] = useState<boolean | null>(null);
+  const [userId] = useState(() => `user_${Math.random().toString(36).slice(2)}`); // Unique ID per session
 
-  // Check if Supabase is configured on component mount
   useEffect(() => {
     async function checkConfiguration() {
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-         
+          body: JSON.stringify({ 
+            messages,
+            user_id: userId
+          })
         });
         const data = await response.json();
         setIsConfigured(!data.error?.includes('Supabase is not configured'));
       } catch (error) {
+        console.error('Config check error:', error);
         setIsConfigured(false);
       }
     }
     checkConfiguration();
-  }, []);
+  }, [userId]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,19 +43,30 @@ export function Chat() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ 
+          message: userMessage,
+          user_id: userId 
+        }),
       });
   
       const data = await response.json();
-      console.log('API Response:', data);
+      
       if (!response.ok) {
         throw new Error(data.error || `Error: ${response.status}`);
       }
   
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: formatMessage(data.response) 
+        content: formatMessage(data.response)
       }]);
+
+      // // Adicionar fontes se disponíveis
+      // if (data.sources?.length > 0) {
+      //   setMessages(prev => [...prev, {
+      //     role: 'assistant',
+      //     content: `Sources:\n${data.sources.join('\n')}`
+      //   }]);
+      // }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
       console.error('Chat error:', errorMessage);
