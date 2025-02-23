@@ -13,6 +13,14 @@ import path from 'path';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { cosineSimilarity } from "@langchain/core/utils/math";
 
+// "gpt-4o-mini", 'gpt-3.5-turbo'
+const CHAT_LLM_MODEL = "gpt-4o-mini";
+const CHAT_LLM_TEMPERATURE = 0.5;
+const CHAT_LLM__MAX_TOKENS = 500;
+
+const GRADER_LLM_MODEL = "gpt-4o-mini";
+const GRADER_LLM_TEMPERATURE = 0.1;
+const GRADER_LLM__MAX_TOKENS = 500;
 
 export const prerender = false;
 export const output = 'server';
@@ -236,12 +244,12 @@ export class ChatService {
       .replace("{document}", document);
 
     const response = await openaiClient.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: GRADER_LLM_MODEL,
       messages: [
         { role: 'system', content: gradingPrompt },
       ],
-      temperature: 0.1,
-      max_tokens: 500
+      temperature: GRADER_LLM_TEMPERATURE,
+      max_tokens: GRADER_LLM__MAX_TOKENS
     });
 
     return {
@@ -251,13 +259,13 @@ export class ChatService {
 
   private async generateResponse(prompt: string, message: string): Promise<string> {
     const completion = await openaiClient.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: CHAT_LLM_MODEL,
       messages: [
         { role: 'system', content: prompt },
         { role: 'user', content: message }
       ],
-      temperature: 0.1,
-      max_tokens: 500
+      temperature: CHAT_LLM_TEMPERATURE,
+      max_tokens: CHAT_LLM__MAX_TOKENS
     });
 
     return completion.choices[0].message.content ?? '';
